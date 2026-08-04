@@ -125,10 +125,10 @@ export default function Sidebar({ open, setOpen }) {
                   <img
                     className="absolute object-contain"
                     style={{
-                      top: "-15px",
-                      left: "0px",
-                      width: "160px",
-                      height: "80px",
+                      top: "-30px",
+                      left: "30px",
+                      width: "175px",
+                      height: "110px",
                     }}
                     src={isLightSidebar ? whitelogo : balcklogo}
                     alt="logo"

@@ -67,18 +67,21 @@ export default function Login() {
     };
 
     return (
-        <div className="login-bg min-h-screen w-full bg-cover bg-no-repeat flex items-center justify-center p-4 md:p-6 lg:p-8">
+        <div className="login-bg min-h-screen w-full bg-cover bg-no-repeat flex items-center justify-center p-4 md:p-6 lg:p-8 overflow-y-auto">
             <div
                 className="
                 w-full
                 max-w-5xl
-                min-h-screen
-                md:min-h-[250px]
-                lg:min-h-[450px]
-                xl:min-h-[420px]
+                min-h-[600px]
+                max-h-none
+                md:min-h-0
+                md:max-h-[90vh]
+                lg:max-h-[650px]
+                xl:max-h-[750px]
                 bg-white
                 rounded-2xl
-                overflow-hidden
+                overflow-y-auto
+                md:overflow-hidden
                 shadow-2xl
                 flex
                 flex-col
