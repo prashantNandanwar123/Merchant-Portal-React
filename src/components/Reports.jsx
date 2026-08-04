@@ -49,7 +49,7 @@ export default function ReportsPage() {
 
   useEffect(() => {
     fetchReport();
-  }, [page, size, fromDate, toDate]);
+  }, [page, size]);
 
   // Export Api Call
   const handleExport = async () => {
@@ -217,16 +217,6 @@ export default function ReportsPage() {
               <CiExport className="text-base" />
               <span>Export</span>
             </button>
-
-            {/* <button
-              onClick={handleExport}
-              className="w-full h-12 rounded-2xl bg-green-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-green-700 transition"
-            >
-              <Download size={18} />
-              Export
-            </button> */}
-
-
             {/* Search Button */}
             <button
               onClick={() => {
@@ -244,7 +234,7 @@ export default function ReportsPage() {
       {/* ================= TABLE SECTION ================= */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
         {/* Top Controls */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-5 border-b">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 p-5">
           {/* Left */}
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">
@@ -256,7 +246,7 @@ export default function ReportsPage() {
                 setSize(Number(e.target.value));
                 setPage(0);
               }}
-              className="border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-400"
+              className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-400"
             >
               <option value={10}>10</option>
               <option value={20}>20</option>
@@ -304,13 +294,12 @@ export default function ReportsPage() {
         {/* Responsive Table */}
         <div
           className="
-          w-full
-          min-w-0
-          h-[420px]
-          lg:h-[400px]
-          overflow-x-auto
-          overflow-y-auto   
-          "
+        w-full
+        min-w-0
+        max-h-[420px]
+        overflow-x-auto
+        overflow-y-auto
+      "
         >
           <table className="min-w-[1700px] text-sm border-collapse">
             <thead className="sticky top-0 z-30 bg-white shadow-sm">

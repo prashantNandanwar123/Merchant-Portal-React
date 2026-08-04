@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { TbMoon } from "react-icons/tb";
+import { PiLinkSimpleBold } from "react-icons/pi";
+import balcklogo from "../assets/img-1.jpeg";
+import whitelogo from "../assets/logo-copy.png";
 import {
   LayoutDashboard,
   BarChart2,
@@ -18,7 +20,6 @@ import {
   Folder,
   Moon,
   Sun
-
 } from "lucide-react";
 
 export default function Sidebar({ open, setOpen }) {
@@ -28,6 +29,7 @@ export default function Sidebar({ open, setOpen }) {
   const [sidebarColor, setSidebarColor] = useState("#020923");
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setSidebarColor(
@@ -40,14 +42,15 @@ export default function Sidebar({ open, setOpen }) {
     sidebarColor === "#fff" ||
     sidebarColor === "#ffffff";
 
-  const getMenuClass = (menu) =>
-    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeMenu === menu
-      ? "bg-[#1a1d2e] text-white"
+  const getMenuClass = ({ isActive }) =>
+    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${isActive && activeMenu !== "settings"
+      ? isLightSidebar
+        ? "bg-yellow-400 text-black"
+        : "bg-white text-black"
       : isLightSidebar
-        ? "text-black hover:bg-[#020923] hover:text-white"
+        ? "text-black hover:bg-yellow-400"
         : "text-white/70 hover:bg-white hover:text-black"
     }`;
-
 
   // Handle Logout
   const handleLogout = async () => {
@@ -60,16 +63,34 @@ export default function Sidebar({ open, setOpen }) {
         setTimeout(() => {
           navigate("/");
         }, 200);
-
       } else {
         toast.error(response.respMsg);
       }
     } catch (error) {
       toast.error(error);
-
       localStorage.removeItem("isLogin");
       localStorage.removeItem("user");
-      window.location.href = "/";
+      setTimeout(() => {
+        navigate("/", { replace: true });
+      }, 200);
+    }
+  };
+
+  const isSettingsChildActive = [
+    "/app/api-keys",
+    "/app/webhooks",
+    "/app/ip-Whishlist",
+    "/app/profile",
+    "/app/apidoc",
+  ].includes(location.pathname);
+
+  const isSettingsMainActive =
+    location.pathname === "/app/settings";
+
+  // Only For Mobile Device
+  const closeSidebarOnMobile = () => {
+    if (window.innerWidth < 1024) {
+      setOpen(false);
     }
   };
 
@@ -77,51 +98,45 @@ export default function Sidebar({ open, setOpen }) {
     <>
       <aside
         className={`
-                        fixed top-0 left-0 h-screen
-                        flex flex-col
-                        transition-all duration-300
-                        z-[100]
-                        ${isLightSidebar ? "text-black" : "text-white"}
-
-                        lg:translate-x-0
-                        ${open ? "translate-x-0 lg:w-64" : "-translate-x-full lg:translate-x-0 lg:w-20"}
-                        w-64
-                  `}
+            fixed top-0 left-0 h-screen
+            flex flex-col
+            transition-all duration-300
+            z-[100]
+            ${isLightSidebar ? "text-black" : "text-white"}
+            lg:translate-x-0
+            ${open ? "translate-x-0 lg:w-64" : "-translate-x-full lg:translate-x-0 lg:w-20"}
+           w-64
+         `}
         style={{ backgroundColor: sidebarColor }}
       >
         {/* Header */}
         <div
-          className={`px-5 py-6 border-b border-white/10 ${open ? "flex items-center justify-between" : "flex justify-center"
+          className={`px-5 py-6 border-b border-white/10 ${open ? "flex items-center" : "flex justify-center"
             }`}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center font-bold text-black text-lg">
+            <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center font-bold text-black text-lg shrink-0">
               H
             </div>
 
             {open && (
-              <div>
-                <h2 className="text-2xl font-semibold leading-none">
-                  HelloPe
-                </h2>
-                <p
-                  className={`text-xs mt-1 ${isLightSidebar ? "text-black/90" : "text-white/60"
-                    }`}
-                >
-                  User Panel
-                </p>
+              <div className="relative w-20 flex flex-col items-center">
+                <div className="relative w-40 h-10 overflow-visible">
+                  <img
+                    className="absolute object-contain"
+                    style={{
+                      top: "-15px",
+                      left: "0px",
+                      width: "160px",
+                      height: "80px",
+                    }}
+                    src={isLightSidebar ? whitelogo : balcklogo}
+                    alt="logo"
+                  />
+                </div>
               </div>
             )}
           </div>
-
-          {/* {open && (
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"
-          >
-            ❮
-          </button>
-        )} */}
         </div>
 
         {/* Menu */}
@@ -129,7 +144,7 @@ export default function Sidebar({ open, setOpen }) {
           {/* MAIN */}
           {open && (
             <p
-              className={`text-[11px] uppercase tracking-widest font-semibold mb-3 ${isLightSidebar ? "text-black" : "text-white/40"
+              className={`text-[11px] uppercase tracking-widest font-semibold mb-3 ${isLightSidebar ? "text-black" : "text-white"
                 }`}
             >
               Main
@@ -139,8 +154,12 @@ export default function Sidebar({ open, setOpen }) {
           <div className="space-y-2">
             <NavLink
               to="/app/dashboard"
-              onClick={() => setActiveMenu("dashboard")}
-              className={getMenuClass("dashboard")}
+              onClick={() => {
+                setActiveMenu("dashboard");
+                setShowSettings(false);
+                closeSidebarOnMobile();
+              }}
+              className={getMenuClass}
             >
               <LayoutDashboard size={18} />
               {open && <span>Dashboard</span>}
@@ -148,17 +167,26 @@ export default function Sidebar({ open, setOpen }) {
 
             <NavLink
               to="/app/paymentlinks"
-              onClick={() => setActiveMenu("paymentlinks")}
-              className={getMenuClass("paymentlinks")}
+              onClick={() => {
+                setActiveMenu("paymentlinks");
+                setShowSettings(false);
+                closeSidebarOnMobile();
+              }}
+              className={getMenuClass}
             >
-              <LayoutDashboard size={18} />
+              <PiLinkSimpleBold size={18} />
               {open && <span>Payment Links</span>}
             </NavLink>
 
             <NavLink
               to="/app/reports"
-              onClick={() => setActiveMenu("reports")}
-              className={getMenuClass("reports")}
+              onClick={() => {
+                setActiveMenu("reports");
+                setShowSettings(false);
+                closeSidebarOnMobile();
+
+              }}
+              className={getMenuClass}
             >
               <BarChart2 size={18} />
               {open && <span>Reports</span>}
@@ -168,24 +196,25 @@ export default function Sidebar({ open, setOpen }) {
           {/* Manage */}
           {open && (
             <p
-              className={`text-[11px] uppercase tracking-widest font-semibold mt-8 mb-3 ${isLightSidebar ? "text-black/80" : "text-white/40"
+              className={`text-[11px] uppercase tracking-widest font-semibold mt-8 mb-3 ${isLightSidebar ? "text-black/80" : "text-white"
                 }`}
             >
               Manage
             </p>
           )}
-
           <div className="space-y-2">
             {/* Settings */}
             <button
               onClick={() => {
-                setShowSettings(!showSettings);
                 setActiveMenu("settings");
+                setShowSettings((prev) => !prev);
               }}
               className={`w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all ${activeMenu === "settings"
-                ? "bg-[#16275a] text-white"
+                ? isLightSidebar
+                  ? "bg-yellow-400 text-black"
+                  : "bg-white text-black"
                 : isLightSidebar
-                  ? "text-black hover:bg-black/10"
+                  ? "text-black"
                   : "text-white/70 hover:bg-white/5"
                 }`}
             >
@@ -202,93 +231,60 @@ export default function Sidebar({ open, setOpen }) {
                 />
               )}
             </button>
-
             {/* Submenu */}
             {showSettings && open && (
               <div className="ml-4 mt-2 space-y-2 border-l border-white/10 pl-4">
                 <NavLink
                   to="/app/api-keys"
-                  onClick={() => setActiveMenu("api-keys")}
-                  className={getMenuClass("api-keys")}
+                  onClick={() => {
+                    setActiveMenu("api-keys");
+                    setShowSettings(true);
+                    closeSidebarOnMobile();
+                  }}
+                  className={getMenuClass}
                 >
                   <Key size={17} />
                   API Keys
                 </NavLink>
-
                 <NavLink
                   to="/app/webhooks"
-                  onClick={() => setActiveMenu("webhooks")}
-                  className={getMenuClass("webhooks")}
+                  onClick={() => {
+                    setActiveMenu("webhooks");
+                    setShowSettings(true);
+                    closeSidebarOnMobile();
+                  }}
+                  className={getMenuClass}
                 >
                   <Webhook size={17} />
                   Webhooks
                 </NavLink>
-
-                <NavLink
-                  to="/app/ip-Whishlist"
-                  onClick={() => setActiveMenu("ip-whitelist")}
-                  className={getMenuClass("ip-whitelist")}
-                >
-                  <Shield size={17} />
-                  IP Whitelist
-                </NavLink>
-
                 <NavLink
                   to="/app/profile"
-                  onClick={() => setActiveMenu("profile")}
-                  className={getMenuClass("profile")}
+                  onClick={() => {
+                    setActiveMenu("profile");
+                    setShowSettings(true);
+                    closeSidebarOnMobile();
+                  }}
+                  className={getMenuClass}
                 >
                   <CircleUser size={17} />
                   Profile
                 </NavLink>
-
                 <NavLink
                   to="/app/apidoc"
-                  onClick={() => setActiveMenu("apidooc")}
-                  className={getMenuClass("apidooc")}
+                  onClick={() => {
+                    setActiveMenu("api-docs");
+                    setShowSettings(true);
+                    closeSidebarOnMobile();
+                  }}
+                  className={getMenuClass}
                 >
                   <BarChart2 size={17} />
                   API Docs
                 </NavLink>
               </div>
             )}
-
           </div>
-          {/* Upgrade Card */}
-          {/* {open && (
-          <div className="mt-8 rounded-2xl bg-[#16275a] p-4">
-            <h4 className="text-sm font-semibold">
-              Unlock more with HelloPe
-            </h4>
-
-            <p className="text-xs text-white/60 mt-2 leading-5">
-              Increase limits, access advanced analytics and more.
-            </p>
-
-            <button className="w-full mt-4 bg-indigo-500 hover:bg-indigo-600 rounded-lg py-2 text-sm font-medium transition">
-              Upgrade Now ↗
-            </button>
-          </div>
-        )} */}
-
-          {/* Status */}
-          {/* {open && (
-          <div className="mt-5 rounded-2xl border border-white/10 p-4">
-            <p className="text-sm font-medium">System Status</p>
-
-            <div className="flex items-center gap-2 mt-3">
-              <div className="w-2 h-2 rounded-full bg-green-500"></div>
-
-              <span className="text-green-400 text-sm">
-                All Systems Operational
-              </span>
-            </div>
-
-            <p className="text-xs text-white/40 mt-2">
-              99.9% uptime
-            </p>
-          </div>
-        )} */}
         </div>
 
         {/* Dark Mode */}

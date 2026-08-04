@@ -21,7 +21,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 
 function ProtectedRoute({ children }) {
   const isLogin = localStorage.getItem("isLogin");
-  if (!isLogin) return <Navigate to="/" replace />;
+  if (isLogin !== "true") {
+    return <Navigate to="/" replace />;
+  }
   return children;
 }
 
@@ -69,7 +71,7 @@ function App() {
           <Route index element={<Navigate to="dashboard" />} />
 
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="PaymentLinks" element={<PaymentLinks/>}/>
+          <Route path="PaymentLinks" element={<PaymentLinks />} />
           <Route path="reports" element={<Reports />} />
           <Route path="apidoc" element={<ApiDocs />} />
 

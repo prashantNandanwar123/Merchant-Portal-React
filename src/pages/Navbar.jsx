@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../api/axios";
 import { toast } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
@@ -8,6 +8,7 @@ export default function Navbar({ toggleSidebar }) {
     const [profileOpen, setProfileOpen] = useState(false);
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [showNotification, setShowNotification] = useState(false);
 
     const location = useLocation();
 
@@ -33,6 +34,27 @@ export default function Navbar({ toggleSidebar }) {
         .slice(0, 2)
         .join("");
 
+
+    // Auto Hide Notification
+    useEffect(() => {
+        if (showNotification) {
+            const timer = setTimeout(() => {
+                setShowNotification(false);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [showNotification]);
+
+    // Notification Icon Click
+    const handleNotificationClick = () => {
+        setShowNotification(true);
+    };
+
+    // Close Notification
+    const handleNotification = () => {
+        setShowNotification(false);
+    };
+
     return (
         <>
             {/* NAVBAR */}
@@ -47,7 +69,7 @@ export default function Navbar({ toggleSidebar }) {
                         <Menu size={22} className="text-gray-700" />
                     </button>
                     {/* Page Title */}
-                    <h1 className="text-3xl font-semibold text-gray-900">
+                    <h1 className="lg:text-3xl text-2xl font-semibold text-gray-900">
                         {pageTitles[location.pathname] || "Dashboard"}
                     </h1>
                 </div>
@@ -55,23 +77,53 @@ export default function Navbar({ toggleSidebar }) {
                 {/* Right Section */}
                 <div className="flex items-center gap-5">
                     {/* Notification */}
-                    <button className="relative p-2 rounded-full hover:bg-gray-100 transition">
-                        <svg
-                            xmlns="http://www.w3"
-                            className="w-6 h-6 text-gray-600"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
+                    <div className="relative">
+                        {/* Notification Button */}
+                        <button
+                            onClick={handleNotificationClick}
+                            className="relative p-2 rounded-full hover:bg-gray-100 transition"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2a2 2 0 01-.6 1.4L4 17h5m6 0a3 3 0 11-6 0h6z"
-                            />
-                        </svg>
-                        <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></span>
-                    </button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-6 h-6 text-gray-600"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2a2 2 0 01-.6 1.4L4 17h5m6 0a3 3 0 11-6 0h6z"
+                                />
+                            </svg>
+
+                            {/* Notification Dot */}
+                            <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></span>
+                        </button>
+
+                        {/* Notification Popup */}
+                        {showNotification && (
+                            <div className="fixed top-20 right-5 z-50 w-96 bg-white rounded-xl shadow-xl  p-4">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h3 className="font-semibold text-gray-900">
+                                            Congratulations! 🎉
+                                        </h3>
+                                        <p className="text-sm text-gray-600 mt-1">
+                                            Congratulations! You are now a member of HelloPe.
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => setShowNotification(false)}
+                                        className="text-gray-400 hover:text-gray-700"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
 
                     {/* Profile */}
                     <button className="flex items-center gap-3 rounded-lg px-2 py-1 hover:bg-gray-100 transition">
@@ -87,6 +139,7 @@ export default function Navbar({ toggleSidebar }) {
                             </span>
                         </div>
                     </button>
+                    
                 </div>
             </header>
         </>

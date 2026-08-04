@@ -223,10 +223,10 @@ function Section({ title, children }) {
                         </p>
                     </div>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
+                {/* <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
                     <FiEdit2 size={15} />
                     Edit
-                </button>
+                </button> */}
             </div>
 
             {/* Body */}

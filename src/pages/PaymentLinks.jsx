@@ -4,7 +4,7 @@ import axiosInstance from "../api/axios";
 import { toast } from "react-toastify";
 import CreatePaymentLinkModal from "../pages/CreatePaymentLinkModal";
 
-const TABS = ["All", "Active", "Closed"];
+const TABS = ["All", "Active", "Expire"];
 
 function StatusBadge({ status }) {
     const isActive = status === "Active";
@@ -19,17 +19,26 @@ function StatusBadge({ status }) {
 }
 
 export default function PaymentLinks() {
-    const today = new Date().toISOString().split("T")[0];
 
     const [openModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState("All");
     const [accounts, setAccounts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [searchText, setSearchText] = useState("");
+    const [paymentData, setPaymentData] = useState({});
+
+
+    const today = (() => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+
+        return `${year}-${month}-${day}`;
+    })();
 
     const [fromDate, setFromDate] = useState(today);
     const [toDate, setToDate] = useState(today);
-    const [searchText, setSearchText] = useState("");
-    const [paymentData, setPaymentData] = useState({});
 
     // ---- Pagination state ----
     const [page, setPage] = useState(0); // 0-indexed- first
@@ -37,10 +46,7 @@ export default function PaymentLinks() {
 
     // 🔹 Convert YYYY-MM-DD → DD/MM/YYYY HH:mm:ss
     const formatDate = (date) => {
-        const d = new Date(date);
-        const day = String(d.getDate()).padStart(2, "0");
-        const month = String(d.getMonth() + 1).padStart(2, "0");
-        const year = d.getFullYear();
+        const [year, month, day] = date.split("-");
         return `${day}/${month}/${year}`;
     };
 
@@ -49,7 +55,11 @@ export default function PaymentLinks() {
         const search = searchText.trim().toLowerCase();
         const tabMatch =
             activeTab === "All" ||
-            String(item.linkStatus || "").toLowerCase() === activeTab.toLowerCase();
+            (activeTab === "Active" &&
+                String(item.linkStatus || "").toLowerCase() === "active") ||
+            (activeTab === "Expire" &&
+                String(item.linkStatus || "").toLowerCase() === "expired");
+
         const searchableFields = [
             item.orderId,
             item.mid,
@@ -70,11 +80,7 @@ export default function PaymentLinks() {
     const totalPages = Math.max(1, Math.ceil(totalRecords / size));
     const displayData = filteredData.slice(page * size, page * size + size);
 
-    // ---- First Data ----
-    useEffect(() => {
-        fetchManualOrders();
-    }, [fromDate, toDate]);
-
+    // FetchManual Orders ApI Call      
     const fetchManualOrders = async () => {
         try {
             setLoading(true);
@@ -94,12 +100,16 @@ export default function PaymentLinks() {
         }
     };
 
+    useEffect(() => {
+        fetchManualOrders();
+    }, []);
+
     // Handle Close Function
     const handleClosePaymentModal = async () => {
         setOpenModal(false);
+        setShowLinkPopup(false)
         await fetchManualOrders();
     }
-
     useEffect(() => {
         setPage(0);
     }, [activeTab, searchText, fromDate, toDate, size]);
@@ -146,12 +156,19 @@ export default function PaymentLinks() {
 
     return (
         <>
-            <div className="bg-white px-10">
+            <div className="bg-white lg:px-10 px-5">
                 {/* Header */}
-                <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                    <h1 className="lg:text-2xl text-xl font-semibold text-gray-900 uppercase">
-                        Payment Links
-                    </h1>
+                <div className="flex items-center justify-between lg:px-6 py-5 border-b border-gray-100">
+                    {/* Title + Subtitle */}
+                    <div>
+                        <h1 className="text-xl lg:text-2xl font-semibold text-gray-900">
+                            Payment Links
+                        </h1>
+                        <p className="text-sm lg:text-base text-gray-500 mt-1">
+                            Generate secure payment links and share them with customers instantly.
+                        </p>
+                    </div>
+                    {/* Button */}
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => {
@@ -165,7 +182,7 @@ export default function PaymentLinks() {
                             className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2.5 rounded-lg"
                         >
                             <Plus size={16} />
-                            New Payment Links
+                            New Payment Link
                         </button>
                     </div>
                 </div>
@@ -187,60 +204,58 @@ export default function PaymentLinks() {
                 </div>
 
                 {/* Filters */}
-                <div className="w-full bg-white border border-gray-200 rounded-md p-3 flex flex-col sm:flex-row gap-3">
-                    {/* First Row (Mobile): From Date + To Date */}
-                    <div className="flex gap-3 w-full sm:w-auto">
+                <div className="w-full bg-white border border-gray-200 rounded-md p-3 flex flex-wrap items-center justify-between gap-3">
+                    {/* Left Side - From Date + To Date */}
+                    <div className="flex items-center gap-6">
                         {/* From Date */}
-                        <div className="relative flex-1 sm:w-[140px]">
+                        <div className="flex items-center gap-2">
+                            <label
+                                htmlFor="fromDate"
+                                className="text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                                From Date
+                            </label>
+
                             <input
+                                id="fromDate"
                                 type="date"
                                 value={fromDate}
                                 onChange={(e) => setFromDate(e.target.value)}
-                                className="w-full h-11 rounded-lg border border-gray-300 bg-white px-4 pr-10 text-sm font-medium text-gray-700 outline-none"
+                                className="w-[140px] h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                             />
                         </div>
 
                         {/* To Date */}
-                        <div className="relative flex-1 sm:w-[140px]">
+                        <div className="flex items-center gap-2">
+                            <label
+                                htmlFor="toDate"
+                                className="text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                                To Date
+                            </label>
+
                             <input
+                                id="toDate"
                                 type="date"
                                 value={toDate}
                                 onChange={(e) => setToDate(e.target.value)}
-                                className="w-full h-11 rounded-lg border border-gray-300 bg-white px-4 pr-10 text-sm font-medium text-gray-700 outline-none"
-                            />
-                        </div>
-
-                        {/* Search Button */}
-                        <button
-                            onClick={fetchManualOrders}
-                            className="h-11 px-6 sm:px-8 rounded-lg bg-[#1565F7] text-white font-medium border border-[#0D47A1] whitespace-nowrap"
-                        >
-                            Search
-                        </button>
-                    </div>
-
-                    {/* Second Row (Mobile): Search Button + Search Input */}
-                    <div className="flex gap-3 w-full">
-
-                        {/* Search Input */}
-                        <div className="relative flex-1">
-                            <Search
-                                size={17}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Search Agent / MID / Order ID..."
-                                value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                className="w-full h-11 rounded-lg border border-gray-300 bg-white pl-11 pr-4 text-sm placeholder:text-gray-400 outline-none"
+                                className="w-[140px] h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                             />
                         </div>
                     </div>
+
+                    {/* Right Side - Search Button */}
+                    <button
+                        onClick={fetchManualOrders}
+                        className="h-11 px-6 sm:px-8 rounded-lg bg-[#1565F7] text-white font-medium border border-[#0D47A1] whitespace-nowrap hover:bg-[#0D5BE1] transition-colors"
+                    >
+                        Search
+                    </button>
                 </div>
 
-                {/* Show entries row — sits right above the table, aligned left */}
-                <div className="flex items-center justify-between px-4 py-2">
+                {/* Show entries row */}
+                <div className="flex w-full items-center justify-between px-4 py-2">
+                    {/* Show Entries - Left Side */}
                     <div className="flex items-center gap-2">
                         <span className="text-sm text-gray-600">
                             Show
@@ -251,7 +266,7 @@ export default function PaymentLinks() {
                                 setSize(Number(e.target.value));
                                 setPage(0);
                             }}
-                            className="border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-yellow-400"
+                            className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-yellow-400"
                         >
                             <option value={10}>10</option>
                             <option value={20}>20</option>
@@ -260,6 +275,21 @@ export default function PaymentLinks() {
                         <span className="text-sm text-gray-600">
                             entries
                         </span>
+                    </div>
+
+                    {/* Search - Right Side */}
+                    <div className="relative w-80">
+                        <Search
+                            size={17}
+                            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                        />
+                        <input
+                            type="text"
+                            placeholder="Search Agent / MID / Order ID..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                            className="h-11 w-full rounded-lg border border-gray-300 bg-white pl-10 pr-4 text-sm outline-none placeholder:text-gray-400"
+                        />
                     </div>
                 </div>
 
@@ -449,7 +479,7 @@ export default function PaymentLinks() {
                 <CreatePaymentLinkModal
                     isOpen={openModal}//true
                     onClose={handleClosePaymentModal}
-                    data={paymentData}//api ka response
+                    data={paymentData} //api ka response
                     createPaymentLink={createPaymentLink}  //api call hua
                 />
             </div>

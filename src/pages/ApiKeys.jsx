@@ -1,20 +1,28 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../api/axios";
 import { toast } from "react-toastify";
-
 import { FaEye, FaEyeSlash, FaRegCopy } from "react-icons/fa";
+import { Copy, Check } from "lucide-react";
 
 export default function ApiKeys() {
-
     const [apikeys, setApiKeys] = useState({});
     const [loading, setLoading] = useState(true);
 
     const [showSaltKey, setShowSaltKey] = useState(false);
     const [showSecretKey, setShowSecretKey] = useState(false);
+    const [copiedKey, setCopiedKey] = useState(null);
 
-    const copyToClipboard = (text) => {
-        navigator.clipboard.writeText(text);
-        toast.success("Copied to clipboard");
+
+    const copyToClipboard = async (text, keyName) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopiedKey(keyName);
+            setTimeout(() => {
+                setCopiedKey(null);
+            }, 2000);
+        } catch (error) {
+            console.error("Failed to copy:", error);
+        }
     };
 
     const fetchApiKeys = async () => {
@@ -52,7 +60,7 @@ export default function ApiKeys() {
                     <>
                         {/* Salt Key */}
                         <div className="mb-5">
-                            <label className="block text-sm text-gray-800 font-normal mb-2">
+                            <label className="block text-lg text-gray-800 font-normal mb-2">
                                 Access Key
                             </label>
 
@@ -79,21 +87,29 @@ export default function ApiKeys() {
                                         }
                                     />
                                 )}
-
-                                <FaRegCopy
-                                    className="text-blue-500 cursor-pointer"
+                                <button
+                                    type="button"
                                     onClick={() =>
-                                        copyToClipboard(
-                                            apikeys?.saltKey || ""
-                                        )
+                                        copyToClipboard(apikeys?.saltKey || "", "access")
                                     }
-                                />
+                                    className={`p-1.5 rounded-md transition ${copiedKey === "access"
+                                        ? "text-green-600 bg-green-50"
+                                        : "text-gray-500 hover:text-blue-600 hover:bg-blue-50"
+                                        }`}
+                                    title={copiedKey === "access" ? "Copied" : "Copy"}
+                                >
+                                    {copiedKey === "access" ? (
+                                        <Check size={16} />
+                                    ) : (
+                                        <Copy size={16} />
+                                    )}
+                                </button>
                             </div>
                         </div>
 
                         {/* Secret Key */}
                         <div className="mb-5">
-                            <label className="block text-sm text-gray-700 mb-2">
+                            <label className="block text-lg text-gray-700 mb-2">
                                 Secret Key
                             </label>
                             <div className="flex items-center border border-gray-300 rounded-md bg-[#f8f9fb] h-12 px-3">
@@ -119,20 +135,29 @@ export default function ApiKeys() {
                                     />
                                 )}
 
-                                <FaRegCopy
-                                    className="text-blue-500 cursor-pointer"
+                                <button
+                                    type="button"
                                     onClick={() =>
-                                        copyToClipboard(
-                                            apikeys?.secretKey || ""
-                                        )
+                                        copyToClipboard(apikeys?.secretKey || "", "secret")
                                     }
-                                />
+                                    className={`p-1.5 rounded-md transition ${copiedKey === "secret"
+                                            ? "text-green-600 bg-green-50"
+                                            : "text-gray-500 hover:text-blue-600 hover:bg-blue-50"
+                                        }`}
+                                    title={copiedKey === "secret" ? "Copied" : "Copy"}
+                                >
+                                    {copiedKey === "secret" ? (
+                                        <Check size={16} />
+                                    ) : (
+                                        <Copy size={16} />
+                                    )}
+                                </button>
                             </div>
                         </div>
 
                         {/* Security Notes */}
                         <div className="border border-gray-200 rounded-md bg-[#f8f9fb] p-4">
-                            <h3 className="text-sm font-medium text-gray-800 mb-3">
+                            <h3 className="text-lg font-medium text-gray-800 mb-3">
                                 Security Notes
                             </h3>
                             <ul className="text-sm text-gray-600 space-y-2">
