@@ -67,30 +67,19 @@ export default function Login() {
     };
 
     return (
-        <div className="login-bg min-h-screen w-full bg-cover bg-no-repeat flex items-center justify-center p-4 md:p-6 lg:p-8 overflow-y-auto">
-            <div
-                className="
-                w-full
-                max-w-3xl
-                h-[100vh]
-                md:h-[85vh]
-                lg:h-[80vh]
-                xl:h-[85vh]
-                2xl:h-[80vh]
+        <div className="min-h-screen w-full flex items-center justify-center p-4 overflow-y-auto login-bg">
+            <div className="w-full max-w-4xl
+                max-h-[100vh]
                 bg-white
                 rounded-2xl
-                overflow-y-auto
-                md:overflow-hidden
                 shadow-2xl
                 flex
                 flex-col
                 md:flex-row
-                mx-auto
                 "
             >
                 {/* ================= LEFT SIDE ================= */}
-                <div className="hidden md:flex md:w-[35%] bg-[#040F25] text-white relative overflow-hidden">
-                    {/* Background Pattern */}
+                <div className="hidden md:flex md:w-[35%] bg-[#040F25] relative text-white overflow-hidden md:rounded-l-2xl">                    {/* Background Pattern */}
                     <div className="absolute inset-0 bg-cover bg-center opacity-20" />
                     <div className="relative z-10 flex flex-col justify-between h-full w-full">
                         {/* Logo */}
@@ -101,7 +90,8 @@ export default function Login() {
                                 className="h-16 md:h-18 lg:h-20 xl:h-16 object-contain"
                                 style={{ marginLeft: "-18px" }}
                             />
-                            <h1 className="text-[18px] md:text-[19px] md:leading-[28px] font-medium">                                Manage your
+                            <h1 className="text-[18px] md:text-[16px] md:leading-[20px] font-medium">
+                                Manage your
                                 <br />
                                 business payments
                                 <br />
@@ -110,7 +100,7 @@ export default function Login() {
                                 </span>
                             </h1>
 
-                            <p className="text-gray-300 mt-2 md:mt-6 leading-5 text-[12px] md:text-[13px] font-normal">
+                            <p className="text-gray-300 mt-2 md:mt-4 leading-4 md:text-xs font-normal">
                                 Secure platform for merchants with
                                 lightning-fast settlements and
                                 powerful dashboard.
@@ -180,7 +170,7 @@ export default function Login() {
                 </div>
 
                 {/* ================= RIGHT SIDE ================= */}
-                <div className="flex-1 relative bg-cover bg-right bg-no-repeat px-6 sm:px-8 md:px-6 lg:px-12 xl:px-8 py-8 xl:py-4">
+                <div className="flex-1 relative bg-cover bg-right bg-no-repeat md:rounded-r-2xl">
                     <div className="relative z-10 flex justify-center items-center min-h-full py-6 xl:py-2 md:px-2 lg:px-6">
                         <div className="w-full max-w-md">
                             {/* Mobile Logo */}
@@ -192,10 +182,10 @@ export default function Login() {
                                 />
                             </div>
                             {/* Heading */}
-                            <h2 className="text-2xl md:pb-2 sm:text-3xl lg:text-4xl xl:text-4xl font-bold text-[#071C39] text-center md:text-left">
+                            <h2 className="text-2xl font-bold text-[#071C39] text-center md:text-left">
                                 Welcome Back!
                             </h2>
-                            <p className="mb-7 xl:mb-3 md:pb-2 text-base text-gray-500 text-center md:text-left">
+                            <p className="mb-2 xl:mb-3 md:pb-2 text-sm text-gray-500 text-center md:text-left">
                                 Login to your Merchant Account
                             </p>
                             {/* FORM START */}
@@ -205,7 +195,7 @@ export default function Login() {
                             >
                                 {/* Part-2*/}
                                 <div>
-                                    <label className="block text-sm md:pb-1 font-semibold text-gray-500 mb-2">
+                                    <label className="block text-sm font-semibold text-gray-500 mb-2">
                                         USER ID
                                     </label>
                                     <div className="relative">
@@ -219,7 +209,7 @@ export default function Login() {
                                             onChange={(e) =>
                                                 setUserId(e.target.value)
                                             }
-                                            className="w-full h-12 rounded-xl border border-gray-300 bg-white pl-12 pr-4 outline-none focus:border-[#FDB913] transition"
+                                            className="w-full lg:h-12 h-10 rounded-xl border border-gray-300 bg-white pl-12 pr-4 outline-none focus:border-[#FDB913] transition"
                                             style={{
                                                 WebkitBoxShadow:
                                                     "0 0 0 1000px white inset",
@@ -230,7 +220,7 @@ export default function Login() {
 
                                 {/* PASSWORD */}
                                 <div>
-                                    <label className="block text-sm md:pt-3 font-semibold text-gray-500 mb-2">
+                                    <label className="block text-sm font-semibold text-gray-500 mb-2">
                                         PASSWORD
                                     </label>
                                     <div className="relative">
@@ -247,7 +237,7 @@ export default function Login() {
                                             onChange={(e) =>
                                                 setPassword(e.target.value)
                                             }
-                                            className="w-full h-12 rounded-xl border border-gray-300 bg-white pl-12 pr-12 outline-none focus:border-[#FDB913] transition"
+                                            className="w-full lg:h-12 h-10 rounded-xl border border-gray-300 bg-white pl-12 pr-12 outline-none focus:border-[#FDB913] transition"
                                             style={{
                                                 WebkitBoxShadow:
                                                     "0 0 0 1000px white inset",
@@ -270,7 +260,7 @@ export default function Login() {
                                 </div>
 
                                 {/* Remember */}
-                                <div className="flex items-center justify-between md:pt-5 md:pb-3">
+                                <div className="flex items-center justify-between pb-2">
                                     <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
                                         <input
                                             type="checkbox"
@@ -289,24 +279,23 @@ export default function Login() {
                                 {/* LOGIN BUTTON */}
                                 <button
                                     type="submit"
-                                    className="w-full cursor-pointer h-12 rounded-xl bg-[#FDB913] hover:bg-[#f3aa00] text-[#071C39] font-semibold text-lg transition flex items-center justify-center gap-3 shadow-md"
+                                    className="w-full cursor-pointer lg:h-12 h-10 rounded-xl bg-[#FDB913] hover:bg-[#f3aa00] text-[#071C39] font-semibold text-lg transition flex items-center justify-center gap-3 shadow-md"
                                 >
                                     <TbLogin2 />
                                     Log In
                                 </button>
 
                                 {/* Divider */}
-                                <div className="flex items-center gap-4 md:py-2 xl:pt-1">
+                                <div className="flex items-center gap-4 pt-4">
                                     <div className="flex-1 h-px bg-gray-300"></div>
-                                    <span className="text-sm text-gray-500 md:py-3">
+                                    <span className="text-sm text-gray-500">
                                         New to HelloPe?
                                     </span>
                                     <div className="flex-1 h-px bg-gray-300"></div>
                                 </div>
 
-
                                 {/* Need Help */}
-                                <div className="p-4 xl:px-2 xl:pt-1">
+                                <div className="p-4 xl:px-2">
                                     <div className="flex gap-4">
                                         <div className="w-12 h-12 rounded-full bg-[#F3F9FF] flex items-center justify-center flex-shrink-0">
                                             <MdOutlineHeadsetMic
@@ -330,7 +319,7 @@ export default function Login() {
                                 </div>
 
                                 {/* Footer */}
-                                <div className="pt-4 xl:pt-2 border-t border-gray-200">
+                                <div className="border-t border-gray-200">
                                     <p className="flex items-center justify-center gap-2 md:pt-2 text-sm text-gray-400 font-normal">
                                         <GrShieldSecurity className="text-base" />
                                         <span>

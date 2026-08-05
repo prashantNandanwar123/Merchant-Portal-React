@@ -1,20 +1,6 @@
 @import "tailwindcss";
 
-@theme {
-  --breakpoint-xs: 480px;
 
-  --breakpoint-tablet: 768px;
-
-  --breakpoint-laptop: 1280px;
-
-  --breakpoint-laptop1366: 1366px;
-
-  --breakpoint-desktop: 1600px;
-
-  --breakpoint-hd: 1920px;
-
-  --breakpoint-2k: 2560px;
-}
 
 html,
 body,
