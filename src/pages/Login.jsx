@@ -68,8 +68,8 @@ export default function Login() {
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center p-4 overflow-y-auto login-bg">
-            <div className="w-full
-             max-w-2xl
+            <div className="w-full 
+                max-w-2xl
                 max-h-[80vh]
                 bg-white
                 rounded-2xl
