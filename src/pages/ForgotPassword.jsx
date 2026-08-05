@@ -189,19 +189,19 @@ export default function ForgotPassword() {
         <div className="login-bg min-h-screen w-full bg-cover bg-no-repeat flex items-center justify-center p-4 md:p-6 lg:p-8">
             <div
                 className="
-        w-full
-        max-w-5xl
-        min-h-[650px]
-        lg:min-h-[750px]
-        xl:min-h-[820px]
-        bg-white
-        rounded-2xl
-        overflow-hidden
-        shadow-2xl
-        flex
-        flex-col
-        md:flex-row
-        "
+                w-full
+                max-w-5xl
+                min-h-[650px]
+                lg:min-h-[750px]
+                xl:min-h-[820px]
+                bg-white
+                rounded-2xl
+                overflow-hidden
+                shadow-2xl
+                flex
+                flex-col
+                md:flex-row
+                "
             >
                 {/* ================= LEFT SIDE ================= */}
                 <div className="hidden md:flex md:w-[35%] bg-[#040F25] text-white relative overflow-hidden">

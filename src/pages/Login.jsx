@@ -68,8 +68,9 @@ export default function Login() {
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center p-4 overflow-y-auto login-bg">
-            <div className="w-full max-w-4xl
-                max-h-[100vh]
+            <div className="w-full
+             max-w-2xl
+                max-h-[80vh]
                 bg-white
                 rounded-2xl
                 shadow-2xl
@@ -83,14 +84,14 @@ export default function Login() {
                     <div className="absolute inset-0 bg-cover bg-center opacity-20" />
                     <div className="relative z-10 flex flex-col justify-between h-full w-full">
                         {/* Logo */}
-                        <div className="px-6 md:px-8 lg:px-10 xl:px-8 xl:pt-3">
+                        <div className="px-6 md:px-8 lg:px-10 xl:px-8 xl:pt-1">
                             <img
                                 src={logo}
                                 alt="img"
                                 className="h-16 md:h-18 lg:h-20 xl:h-16 object-contain"
                                 style={{ marginLeft: "-18px" }}
                             />
-                            <h1 className="text-[18px] md:text-[16px] md:leading-[20px] font-medium">
+                            <h1 className="text-[18px] md:text-[14px] md:leading-[18px] font-medium">
                                 Manage your
                                 <br />
                                 business payments
@@ -99,24 +100,22 @@ export default function Login() {
                                     effortlessly
                                 </span>
                             </h1>
-
-                            <p className="text-gray-300 mt-2 md:mt-4 leading-4 md:text-xs font-normal">
+                            <p className="text-gray-300 md:mt-2 leading-4 md:text-xs font-normal">
                                 Secure platform for merchants with
                                 lightning-fast settlements and
                                 powerful dashboard.
                             </p>
-
                             {/* Features */}
-                            <div className="space-y-5 md:space-y-6 lg:space-y-8 xl:space-y-4 mt-4 md:mt-6">
+                            <div className="space-y-5 md:space-y-6 lg:space-y-8 xl:space-y-2 mt-4 md:mt-6">
                                 <div className="flex items-start gap-3 md:gap-4 lg:gap-5">
-                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                    <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
                                         <FaShieldAlt className="text-yellow-400 text-lg" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-sm">
+                                        <h3 className="font-semibold text-xs">
                                             Secure Transactions
                                         </h3>
-                                        <p className="text-gray-300 text-sm mt-1">
+                                        <p className="text-gray-300 text-xs mt-1">
                                             Bank level encrypted
                                             <br />
                                             payment infrastructure.
@@ -129,10 +128,10 @@ export default function Login() {
                                         <FaBolt className="text-yellow-400 text-lg" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-sm ">
+                                        <h3 className="font-semibold text-xs">
                                             Fast Settlement
                                         </h3>
-                                        <p className="text-gray-300 text-sm mt-1">
+                                        <p className="text-gray-300 text-xs mt-1">
                                             Receive your payments
                                             <br />
                                             quickly and securely.
@@ -145,10 +144,10 @@ export default function Login() {
                                         <FaChartBar className="text-yellow-400 text-lg" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-sm">
+                                        <h3 className="font-semibold text-xs">
                                             Analytics
                                         </h3>
-                                        <p className="text-gray-300 text-sm mt-1">
+                                        <p className="text-gray-300 text-xs mt-1">
                                             Smart reports to grow
                                             <br />
                                             your business.
@@ -163,14 +162,14 @@ export default function Login() {
                             <img
                                 src={img2}
                                 alt=""
-                                className="object-contain max-w-full xl:max-h-40"
+                                className="object-contain max-w-full xl:max-h-25"
                             />
                         </div>
                     </div>
                 </div>
 
                 {/* ================= RIGHT SIDE ================= */}
-                <div className="flex-1 relative bg-cover bg-right bg-no-repeat md:rounded-r-2xl">
+                <div className="flex-1 relative bg-cover bg-right bg-no-repeat md:rounded-r-2xl px-4">
                     <div className="relative z-10 flex justify-center items-center min-h-full py-6 xl:py-2 md:px-2 lg:px-6">
                         <div className="w-full max-w-md">
                             {/* Mobile Logo */}
@@ -199,7 +198,7 @@ export default function Login() {
                                         USER ID
                                     </label>
                                     <div className="relative">
-                                        <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl" />
+                                        <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg" />
                                         <input
                                             type="text"
                                             autoComplete="off"
@@ -209,7 +208,7 @@ export default function Login() {
                                             onChange={(e) =>
                                                 setUserId(e.target.value)
                                             }
-                                            className="w-full lg:h-12 h-10 rounded-xl border border-gray-300 bg-white pl-12 pr-4 outline-none focus:border-[#FDB913] transition"
+                                            className="w-full h-10 rounded-xl border border-gray-300 bg-white pl-12 pr-4 outline-none focus:border-[#FDB913] transition"
                                             style={{
                                                 WebkitBoxShadow:
                                                     "0 0 0 1000px white inset",
@@ -237,7 +236,7 @@ export default function Login() {
                                             onChange={(e) =>
                                                 setPassword(e.target.value)
                                             }
-                                            className="w-full lg:h-12 h-10 rounded-xl border border-gray-300 bg-white pl-12 pr-12 outline-none focus:border-[#FDB913] transition"
+                                            className="w-full  h-10 rounded-xl border border-gray-300 bg-white pl-12 pr-12 outline-none focus:border-[#FDB913] transition"
                                             style={{
                                                 WebkitBoxShadow:
                                                     "0 0 0 1000px white inset",
@@ -279,14 +278,14 @@ export default function Login() {
                                 {/* LOGIN BUTTON */}
                                 <button
                                     type="submit"
-                                    className="w-full cursor-pointer lg:h-12 h-10 rounded-xl bg-[#FDB913] hover:bg-[#f3aa00] text-[#071C39] font-semibold text-lg transition flex items-center justify-center gap-3 shadow-md"
+                                    className="w-full cursor-pointer h-10 rounded-xl bg-[#FDB913] hover:bg-[#f3aa00] text-[#071C39] font-semibold text-lg transition flex items-center justify-center gap-3 shadow-md"
                                 >
                                     <TbLogin2 />
                                     Log In
                                 </button>
 
                                 {/* Divider */}
-                                <div className="flex items-center gap-4 pt-4">
+                                <div className="flex items-center gap-4 pt-2">
                                     <div className="flex-1 h-px bg-gray-300"></div>
                                     <span className="text-sm text-gray-500">
                                         New to HelloPe?
@@ -295,19 +294,19 @@ export default function Login() {
                                 </div>
 
                                 {/* Need Help */}
-                                <div className="p-4 xl:px-2">
+                                <div className="p-2">
                                     <div className="flex gap-4">
                                         <div className="w-12 h-12 rounded-full bg-[#F3F9FF] flex items-center justify-center flex-shrink-0">
                                             <MdOutlineHeadsetMic
                                                 size={25}
-                                                className="text-[#2980b9] text-xl"
+                                                className="text-[#2980b9] text-lg"
                                             />
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-[#071C39]">
                                                 Need Help?
                                             </h4>
-                                            <p className="text-sm text-gray-700 md:mt-1">
+                                            <p className="text-xs text-gray-700 md:mt-1">
                                                 Contact Us at
                                                 <span className="text-[#3498db] font-medium mt-2">
                                                     {" "}
@@ -321,7 +320,7 @@ export default function Login() {
                                 {/* Footer */}
                                 <div className="border-t border-gray-200">
                                     <p className="flex items-center justify-center gap-2 md:pt-2 text-sm text-gray-400 font-normal">
-                                        <GrShieldSecurity className="text-base" />
+                                        <GrShieldSecurity className="text-xs" />
                                         <span>
                                             Your security is our Priority
                                         </span>
