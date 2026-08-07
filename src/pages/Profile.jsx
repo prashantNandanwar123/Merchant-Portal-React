@@ -37,21 +37,21 @@ export default function Profile() {
 
     return (
         <>
-            <div className="lg:px-10 lg:pb-10 h-screen overflow-y-auto hide-scrollbar">
-                <div className="min-h-screen p-8 overflow-y-auto hide-scrollbar">
+            <div className="px-4 sm:px-6 lg:px-10 py-4 sm:py-6 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar">
+                <div className="w-full">
                     {/* Top Merchant Card */}
-                    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mb-6">
-                        <div className="flex items-center justify-between">
+                    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-4 sm:p-6 mb-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             {/* Left */}
-                            <div className="flex items-center gap-4">
-                                <div className="p-3 rounded-2xl bg-[#FEF6E7] flex items-center justify-center">
+                            <div className="flex items-center gap-3 sm:gap-4">
+                                <div className="p-3 rounded-2xl bg-[#FEF6E7] flex items-center justify-center shrink-0">
                                     <MdStorefront size={28} color="#FDC501" />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold text-gray-800">
+                                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 break-words">
                                         {profileData.legalName || "--"}
                                     </h2>
-                                    <p className="text-gray-500 mt-1 text-sm">
+                                    <p className="text-gray-500 mt-1 text-xs sm:text-sm">
                                         Merchant ID :
                                         <span className="font-medium ml-1 text-gray-700">
                                             {profileData.mid}
@@ -61,9 +61,9 @@ export default function Profile() {
                             </div>
 
                             {/* Right */}
-                            <div>
+                            <div className="self-start sm:self-auto">
                                 <span
-                                    className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold ${profileData.status === "A"
+                                    className={`inline-flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold ${profileData.status === "A"
                                         ? "bg-green-100 text-green-700"
                                         : "bg-red-100 text-red-700"
                                         }`}
@@ -258,42 +258,45 @@ function ProfileField({ label, value }) {
     };
 
     return (
-        <div className="border-b border-r border-gray-200 p-6 last:border-r-0">
-            <p className="text-sm font-medium text-gray-500 mb-2">
+        <div className="border-b border-gray-200 p-4 sm:p-6 xl:p-2.5">
+            <p className="text-sm xl:text-[11px] font-medium text-gray-500 mb-2 xl:mb-0.5">
                 {label}
             </p>
+
             {isLink ? (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 xl:gap-1">
                     {/* Before URL icon */}
                     <FiGlobe
                         size={17}
-                        className="text-blue-500 flex-shrink-0"
+                        className="text-blue-500 flex-shrink-0 xl:w-3.5 xl:h-3.5"
                     />
+
                     <a
                         href={value}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[15px] font-semibold text-blue-600 hover:underline break-all"
+                        className="flex-1 text-[15px] xl:text-[11px] font-semibold text-blue-600 hover:underline break-all"
                     >
                         {value}
                     </a>
+
                     {/* Copy icon */}
                     {copied ? (
                         <FiCheck
                             size={16}
-                            className="text-green-500 flex-shrink-0"
+                            className="text-green-500 flex-shrink-0 xl:w-3.5 xl:h-3.5"
                         />
                     ) : (
                         <FiCopy
                             size={16}
                             onClick={copyUrl}
                             title="Copy URL"
-                            className="cursor-pointer text-blue-500 hover:text-[#FDC501] flex-shrink-0"
+                            className="cursor-pointer text-blue-500 hover:text-[#FDC501] flex-shrink-0 xl:w-3.5 xl:h-3.5"
                         />
                     )}
                 </div>
             ) : (
-                <p className="text-[15px] font-semibold text-gray-800 break-words">
+                <p className="text-[15px] xl:text-[11px] font-semibold text-gray-800 break-words">
                     {value || "--"}
                 </p>
             )}

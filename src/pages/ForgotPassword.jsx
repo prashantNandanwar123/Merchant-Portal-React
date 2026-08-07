@@ -186,381 +186,357 @@ export default function ForgotPassword() {
     const req = <span className="text-red-500">*</span>;
 
     return (
-        <div className="login-bg min-h-screen w-full bg-cover bg-no-repeat flex items-center justify-center p-4 md:p-6 lg:p-8">
-            <div
-                className="
+        <div className="min-h-screen flex items-center justify-center p-4 md:p-6 overflow-auto login-bg">            <div
+            className="
                 w-full
-                max-w-5xl
-                min-h-[650px]
-                lg:min-h-[750px]
-                xl:min-h-[820px]
+                max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl
                 bg-white
-                rounded-2xl
-                overflow-hidden
-                shadow-2xl
+                rounded-xl
+                shadow-xl
                 flex
                 flex-col
                 md:flex-row
-                "
-            >
-                {/* ================= LEFT SIDE ================= */}
-                <div className="hidden md:flex md:w-[35%] bg-[#040F25] text-white relative overflow-hidden">
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 bg-cover bg-center opacity-20" />
+                ">
+            <div className="hidden md:flex md:w-[35%] bg-[#040F25] relative text-white overflow-hidden md:rounded-l-2xl">                    {/* Background Pattern */}
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-cover bg-center opacity-20" />
+                <div className="relative z-10 flex flex-col justify-between h-full w-full">
+                    {/* Logo */}
+                    <div className="px-6 md:px-8 lg:px-10">
+                        <img
+                            src={logo}
+                            alt="img"
+                            className="w-25 object-contain"
+                            style={{ marginLeft: "-18px" }}
+                        />
+                        <h1 className="text-lg md:text-xs leading-[28px] md:leading-[19px] font-medium">
+                            Manage your
+                            <br />
+                            business payments
+                            <br />
+                            <span className="text-[#FFB504]">effortlessly</span>
+                        </h1>
 
-                    <div className="relative z-10 flex flex-col justify-between h-full w-full">
-                        {/* Logo */}
-                        <div className="px-6 md:px-8 lg:px-10">
-                            <img
-                                src={logo}
-                                alt="img"
-                                className="h-16 md:h-18 lg:h-20 object-contain"
-                                style={{ marginLeft: "-18px" }}
-                            />
+                        <p className="text-gray-300 mt-2 leading-4 text-[12px] md:text-xs font-normal">
+                            Secure platform for merchants with
+                            lightning-fast settlements and
+                            powerful dashboard.
+                        </p>
 
-                            <h1 className="text-[18px] md:text-[19px] lg:text-[20px] leading-[28px] md:leading-[30px] font-medium">
-                                Manage your
-                                <br />
-                                business payments
-                                <br />
-                                <span className="text-[#FFB504]">effortlessly</span>
-                            </h1>
-
-                            <p className="text-gray-300 mt-2 leading-5 text-[12px] md:text-[13px] font-normal">
-                                Secure platform for merchants with
-                                lightning-fast settlements and
-                                powerful dashboard.
-                            </p>
-
-                            {/* Features */}
-                            <div className="space-y-5 md:space-y-6 lg:space-y-8 mt-4">
-                                <div className="flex items-start gap-3 md:gap-4 lg:gap-5">
-                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                                        <FaShieldAlt className="text-yellow-400 text-lg" />
-                                    </div>
-
-                                    <div>
-                                        <h3 className="font-semibold text-sm">
-                                            Secure Transactions
-                                        </h3>
-
-                                        <p className="text-gray-300 text-sm mt-1">
-                                            Bank level encrypted
-                                            <br />
-                                            payment infrastructure.
-                                        </p>
-                                    </div>
+                        {/* Features */}
+                        <div className="space-y-5 md:space-y-4 lg:space-y-4 mt-6">
+                            <div className="flex items-start gap-3 md:gap-4 lg:gap-5">
+                                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                    <FaShieldAlt className="text-yellow-400 text-lg" />
                                 </div>
+                                <div>
+                                    <h3 className="font-semibold text-xs">
+                                        Secure Transactions
+                                    </h3>
 
-                                <div className="flex items-start gap-3 md:gap-4 lg:gap-5">
-                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                                        <FaBolt className="text-yellow-400 text-lg" />
-                                    </div>
-
-                                    <div>
-                                        <h3 className="font-semibold text-sm">
-                                            Fast Settlement
-                                        </h3>
-
-                                        <p className="text-gray-300 text-sm mt-1">
-                                            Receive your payments
-                                            <br />
-                                            quickly and securely.
-                                        </p>
-                                    </div>
+                                    <p className="text-gray-300 text-xs mt-1">
+                                        Bank level encrypted
+                                        <br />
+                                        payment infrastructure.
+                                    </p>
                                 </div>
+                            </div>
 
-                                <div className="flex items-start gap-3 md:gap-4 lg:gap-5">
-                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                                        <FaChartBar className="text-yellow-400 text-lg" />
-                                    </div>
+                            <div className="flex items-start gap-3 md:gap-4 lg:gap-5">
+                                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                    <FaBolt className="text-yellow-400 text-lg" />
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-xs 2xl:text-lg">
+                                        Fast Settlement
+                                    </h3>
 
-                                    <div>
-                                        <h3 className="font-semibold text-sm">
-                                            Analytics
-                                        </h3>
+                                    <p className="text-gray-300 text-xs 2xl:text-lg mt-1">
+                                        Receive your payments
+                                        <br />
+                                        quickly and securely.
+                                    </p>
+                                </div>
+                            </div>
 
-                                        <p className="text-gray-300 text-sm mt-1">
-                                            Smart reports to grow
-                                            <br />
-                                            your business.
-                                        </p>
-                                    </div>
+                            <div className="flex items-start gap-3 md:gap-4">
+                                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                    <FaChartBar className="text-yellow-400 text-lg" />
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-xs 2xl:text-lg">
+                                        Analytics
+                                    </h3>
+                                    <p className="text-gray-300 text-xs 2xl:text-lg mt-1">
+                                        Smart reports to grow
+                                        <br />
+                                        your business.
+                                    </p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        {/* Bottom Demo Image */}
-                        <div className="flex justify-center">
-                            <img
-                                src={img2}
-                                alt=""
-                                className="object-contain max-w-full"
-                            />
-                        </div>
+                    {/* Bottom Demo Image */}
+                    <div className="flex justify-center">
+                        <img
+                            src={img2}
+                            alt=""
+                            className="w-40 object-contain"
+                        />
                     </div>
                 </div>
+            </div>
 
-                {/* ================= RIGHT SIDE ================= */}
-                <div className="flex-1 relative bg-cover bg-right bg-no-repeat px-6 sm:px-8 md:px-6 lg:px-12 py-8">
-                    <div className="px-0 md:px-2 lg:px-15 py-10 flex flex-col">
-                        <div className="flex justify-center mb-8">
-                            <img
-                                src="/logo.avif"
-                                alt="Logo"
-                                className="h-16 object-contain"
+            {/* ================= RIGHT SIDE ================= */}
+            <div className="flex-1 relative bg-cover bg-right bg-no-repeat md:rounded-r-2xl p-5">
+                <div className="px-3 md:px-10 lg:px-12 py-3 md:py-2 flex flex-col">
+                    <div className="flex justify-center mb-3">
+                        <img
+                            src="/logo.avif"
+                            alt="Logo"
+                            className="h-16 md:h-10 object-contain"
+                        />
+                    </div>
+
+                    {/* Heading */}
+                    <div className="text-center mb-4">
+                        <h2 className="text-2xl md:text-xl font-medium text-black">
+                            Reset Password
+                        </h2>
+                        <p className="text-gray-500 mt-1 text-lg md:text-xs">
+                            Reset your account password securely
+                        </p>
+                    </div>
+
+                    <form className="space-y-3 flex-1">
+                        {/* USER ID */}
+                        <div className="relative">
+                            <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm">
+                                User ID {req}
+                            </label>
+                            <input
+                                type="text"
+                                value={userId}
+                                maxLength={20}
+                                onChange={(e) => setUserId(e.target.value)}
+                                className="w-full h-10 md:h-10 px-4 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
                             />
+
+                            {otpSent && (
+                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600 text-xl font-bold">
+                                    ✓
+                                </span>
+                            )}
                         </div>
 
-                        {/* Heading */}
-                        <div className="text-center mb-10">
-                            <h2 className="text-2xl font-medium text-black">
-                                Reset Password
-                            </h2>
+                        {/* SEND OTP */}
+                        {!otpSent && !otpVerified && (
+                            <button
+                                type="button"
+                                onClick={sendOtp}
+                                disabled={loading}
+                                className="w-full h-14 md:h-10 bg-[#FDB913] cursor-pointer hover:bg-[#D99B00] text-white rounded-xl text-lg font-medium transition"
+                            >
+                                {loading ? "Sending..." : "Send OTP"}
+                            </button>
+                        )}
 
-                            <p className="text-gray-500 mt-1 text-lg">
-                                Reset your account password securely
-                            </p>
-                        </div>
-
-                        <form className="space-y-5 flex-1">
-                            {/* USER ID */}
-                            <div className="relative">
+                        {/* OTP */}
+                        {otpSent && (
+                            <div className="relative mt-5">
                                 <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm">
-                                    User ID {req}
+                                    OTP {req}
                                 </label>
 
                                 <input
                                     type="text"
-                                    value={userId}
-                                    maxLength={20}
-                                    onChange={(e) => setUserId(e.target.value)}
-                                    className="w-full h-14 px-4 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                    value={otp}
+                                    maxLength={6}
+                                    disabled={!otpSent}
+                                    onChange={handleOtpChange}
+                                    className={`w-full h-14 md:h-10 px-4 border rounded-xl bg-white focus:outline-none focus:border-orange-500 ${otpError
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                        }`}
                                 />
 
-                                {otpSent && (
+                                {otpVerified && (
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600 text-xl font-bold">
                                         ✓
                                     </span>
                                 )}
+
+                                {otpError && (
+                                    <p className="mt-1 text-sm text-red-500">
+                                        {otpError}
+                                    </p>
+                                )}
+
+                                <div className="flex items-center justify-between mt-2">
+                                    <p className="text-sm md:text-xs text-gray-600">
+                                        Your OTP will expire in{" "}
+                                        <span className="font-semibold text-red-500">
+                                            {minutes}:{seconds}
+                                        </span>
+                                    </p>
+
+                                    <button
+                                        type="button"
+                                        onClick={sendOtp}
+                                        disabled={timer > 0}
+                                        className={`text-sm md:text-xs font-medium ${timer > 0
+                                            ? "text-gray-400 cursor-not-allowed"
+                                            : "text-orange-500 hover:text-orange-600"
+                                            }`}
+                                    >
+                                        Resend OTP
+                                    </button>
+                                </div>
                             </div>
+                        )}
 
-                            {/* SEND OTP */}
-                            {!otpSent && !otpVerified && (
-                                <button
-                                    type="button"
-                                    onClick={sendOtp}
-                                    disabled={loading}
-                                    className="w-full h-14 bg-[#FDB913] cursor-pointer hover:bg-[#D99B00] text-white rounded-xl text-lg font-medium transition"
-                                >
-                                    {loading ? "Sending..." : "Send OTP"}
-                                </button>
-                            )}
+                        {/* VERIFY OTP */}
+                        {otpSent && !otpVerified && (
+                            <button
+                                type="button"
+                                onClick={verifyOtp}
+                                disabled={loading}
+                                className="w-full h-10 bg-orange-500 cursor-pointer hover:bg-orange-600 text-white rounded-xl text-lg font-medium transition"
+                            >
+                                {loading ? "Verifying..." : "Verify OTP"}
+                            </button>
+                        )}
 
-                            {/* OTP */}
-                            {otpSent && (
-                                <div className="relative">
+                        {/* PASSWORDS */}
+                        {otpVerified && (
+                            <>
+                                {/* NEW PASSWORD */}
+                                <div className="relative mt-5">
                                     <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm">
-                                        OTP {req}
+                                        New Password
                                     </label>
 
                                     <input
-                                        type="text"
-                                        value={otp}
-                                        maxLength={6}
-                                        disabled={!otpSent}
-                                        onChange={handleOtpChange}
-                                        className={`w-full h-14 px-4 border rounded-xl bg-white focus:outline-none focus:border-orange-500 ${otpError
-                                                ? "border-red-500"
-                                                : "border-gray-300"
-                                            }`}
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        value={password}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
+                                        className="w-full h-14 md:h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                        style={{
+                                            backgroundColor: "#fff",
+                                            WebkitBoxShadow:
+                                                "0 0 0 1000px white inset",
+                                        }}
                                     />
 
-                                    {otpVerified && (
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setShowPassword(!showPassword)
+                                        }
+                                        className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-500"
+                                    >
+                                        {showPassword ? (
+                                            <FaEyeSlash />
+                                        ) : (
+                                            <FaEye />
+                                        )}
+                                    </button>
+
+                                    {password.length > 0 && (
                                         <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600 text-xl font-bold">
                                             ✓
                                         </span>
                                     )}
-
-                                    {otpError && (
-                                        <p className="mt-1 text-sm text-red-500">
-                                            {otpError}
-                                        </p>
-                                    )}
-
-                                    <div className="flex items-center justify-between mt-2">
-                                        <p className="text-sm text-gray-600">
-                                            Your OTP will expire in{" "}
-                                            <span className="font-semibold text-red-500">
-                                                {minutes}:{seconds}
-                                            </span>
-                                        </p>
-
-                                        <button
-                                            type="button"
-                                            onClick={sendOtp}
-                                            disabled={timer > 0}
-                                            className={`text-sm font-medium ${timer > 0
-                                                    ? "text-gray-400 cursor-not-allowed"
-                                                    : "text-orange-500 hover:text-orange-600"
-                                                }`}
-                                        >
-                                            Resend OTP
-                                        </button>
-                                    </div>
                                 </div>
-                            )}
 
-                            {/* VERIFY OTP */}
-                            {otpSent && !otpVerified && (
-                                <button
-                                    type="button"
-                                    onClick={verifyOtp}
-                                    disabled={loading}
-                                    className="w-full h-14 bg-orange-500 cursor-pointer hover:bg-orange-600 text-white rounded-xl text-lg font-medium transition"
-                                >
-                                    {loading ? "Verifying..." : "Verify OTP"}
-                                </button>
-                            )}
+                                {/* CONFIRM PASSWORD */}
+                                <div className="relative">
+                                    <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm">
+                                        Confirm Password {req}
+                                    </label>
 
-                            {/* PASSWORDS */}
-                            {otpVerified && (
-                                <>
-                                    {/* NEW PASSWORD */}
-                                    <div className="relative">
-                                        <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm">
-                                            New Password
-                                        </label>
+                                    <input
+                                        type={
+                                            showConfirmPassword
+                                                ? "text"
+                                                : "password"
+                                        }
+                                        value={confirmPassword}
+                                        onChange={(e) =>
+                                            setConfirmPassword(e.target.value)
+                                        }
+                                        className="w-full h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                    />
 
-                                        <input
-                                            type={
-                                                showPassword ? "text" : "password"
-                                            }
-                                            value={password}
-                                            onChange={(e) =>
-                                                setPassword(e.target.value)
-                                            }
-                                            className="w-full h-14 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
-                                            style={{
-                                                backgroundColor: "#fff",
-                                                WebkitBoxShadow:
-                                                    "0 0 0 1000px white inset",
-                                            }}
-                                        />
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setShowConfirmPassword(
+                                                !showConfirmPassword
+                                            )
+                                        }
+                                        className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-500"
+                                    >
+                                        {showConfirmPassword ? (
+                                            <FaEyeSlash />
+                                        ) : (
+                                            <FaEye />
+                                        )}
+                                    </button>
 
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                setShowPassword(!showPassword)
-                                            }
-                                            className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-500"
-                                        >
-                                            {showPassword ? (
-                                                <FaEyeSlash />
-                                            ) : (
-                                                <FaEye />
-                                            )}
-                                        </button>
-
-                                        {password.length > 0 && (
+                                    {confirmPassword &&
+                                        password === confirmPassword && (
                                             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600 text-xl font-bold">
                                                 ✓
                                             </span>
                                         )}
-                                    </div>
+                                </div>
 
-                                    {/* CONFIRM PASSWORD */}
-                                    <div className="relative">
-                                        <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm">
-                                            Confirm Password {req}
-                                        </label>
+                                {/* RESET PASSWORD */}
+                                <button
+                                    type="button"
+                                    onClick={handleResetPassword}
+                                    disabled={loading}
+                                    className="w-full cursor-pointer h-14 md:h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-lg font-medium transition"
+                                >
+                                    {loading
+                                        ? "Processing..."
+                                        : "Reset Password"}
+                                </button>
+                            </>
+                        )}
 
-                                        <input
-                                            type={
-                                                showConfirmPassword
-                                                    ? "text"
-                                                    : "password"
-                                            }
-                                            value={confirmPassword}
-                                            onChange={(e) =>
-                                                setConfirmPassword(e.target.value)
-                                            }
-                                            className="w-full h-14 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
-                                        />
+                        {/* BACK TO LOGIN */}
+                        <button
+                            type="button"
+                            onClick={() => navigate("/")}
+                            className="w-full h-14 md:h-10 border cursor-pointer border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition"
+                        >
+                            Back to Login
+                        </button>
 
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                setShowConfirmPassword(
-                                                    !showConfirmPassword
-                                                )
-                                            }
-                                            className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-500"
-                                        >
-                                            {showConfirmPassword ? (
-                                                <FaEyeSlash />
-                                            ) : (
-                                                <FaEye />
-                                            )}
-                                        </button>
+                        <div className="mt-1 p-1.5 rounded-lg bg-yellow-50">
+                            <p className="text-xs font-semibold text-orange-700 mb-0.5">
+                                Note :
+                            </p>
 
-                                        {confirmPassword &&
-                                            password === confirmPassword && (
-                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600 text-xl font-bold">
-                                                    ✓
-                                                </span>
-                                            )}
-                                    </div>
-
-                                    {/* RESET PASSWORD */}
-                                    <button
-                                        type="button"
-                                        onClick={handleResetPassword}
-                                        disabled={loading}
-                                        className="w-full cursor-pointer h-14 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-lg font-medium transition"
-                                    >
-                                        {loading
-                                            ? "Processing..."
-                                            : "Reset Password"}
-                                    </button>
-                                </>
-                            )}
-
-                            {/* BACK TO LOGIN */}
-                            <button
-                                type="button"
-                                onClick={() => navigate("/")}
-                                className="w-full h-14 border cursor-pointer border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition"
-                            >
-                                Back to Login
-                            </button>
-
-                            <div className="mt-3 p-3 rounded-xl bg-yellow-50">
-                                <p className="text-xs font-semibold text-orange-700 mb-1">
-                                    Note:
-                                </p>
-                                <ul className="text-xs text-gray-600 space-y-1">
-                                    <li>
-                                        • Password must contain at least 8 characters
-                                    </li>
-                                    <li>
-                                        • Include at least one uppercase letter
-                                    </li>
-                                    <li>
-                                        • Include at least one lowercase letter
-                                    </li>
-                                    <li>
-                                        • Include at least one number
-                                    </li>
-                                    <li>
-                                        • Include at least one special character
-                                    </li>
-                                </ul>
-                            </div>
-                        </form>
-                    </div>
+                            <ul className="text-xs text-gray-600 space-y-0.5 leading-4">
+                                <li>• Password must contain at least 8 characters</li>
+                                <li>• Include at least one uppercase letter</li>
+                                <li>• Include at least one lowercase letter</li>
+                                <li>• Include at least one number</li>
+                                <li>• Include at least one special character</li>
+                            </ul>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

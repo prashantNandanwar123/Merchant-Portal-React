@@ -50,7 +50,7 @@ body,
 
 .login-bg {
   background-image: url("./assets/img.png");
-  background-size: calc(100% - 400px) auto;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -58,6 +58,7 @@ body,
 @media (max-width: 1023px) {
   .login-bg {
     background-image: url("./assets/img3.png");
-    background-position: left bottom;
+    background-size: cover;
+    background-position: center bottom;
   }
 }

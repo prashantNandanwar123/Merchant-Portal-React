@@ -229,19 +229,17 @@ export default function DashboardBottomSection() {
     };
 
     return (
-        <div className="mt-4">
-            {/* ================= TRANSACTION OVERVIEW ================= */}
-            <div className="xl:col-span-2 bg-white rounded-2xl border border-gray-200 shadow-sm p-4 my-6">
-                {/* Header */}
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                    <h3 className="text-2xl font-semibold text-gray-900 sm:mb-5">
+        <div className="mt-7">
+            <div className="xl:col-span-2 bg-white rounded-2xl border border-gray-200 shadow-sm p-4 sm:p-6 xl:p-3 my-6 xl:my-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-4 xl:mb-1.5">
+                    <h3 className="text-lg sm:text-2xl xl:text-base font-semibold text-gray-900 sm:mb-2 xl:mb-0">
                         Transaction Overview
                     </h3>
                     <div className="flex items-center gap-2">
                         <select
                             value={filterDays}
                             onChange={(e) => setFilterDays(Number(e.target.value))}
-                            className="h-8 px-2 rounded-lg border border-gray-200 text-xs text-gray-600 font-medium"
+                            className="h-8 xl:h-6 px-2 rounded-lg border border-gray-200 text-xs xl:text-[10px] text-gray-600 font-medium"
                         >
                             <option value={7}>Last 7 Days</option>
                             <option value={15}>Last 15 Days</option>
@@ -250,111 +248,28 @@ export default function DashboardBottomSection() {
                     </div>
                 </div>
 
-                {/* Total Volume */}
-                <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="mb-4 xl:mb-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 </div>
 
-                {/* Chart */}
-                <div className="h-72 -ml-2">
+                <div className="h-64 sm:h-72 xl:h-51 w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart
-                            data={chartData}
-                            margin={{
-                                top: 15,
-                                right: 20,
-                                left: 10,
-                                bottom: 10,
-                            }}
-                        >
+                        <AreaChart data={chartData} margin={{ top: 15, right: 20, left: 10, bottom: 10 }}>
                             <defs>
-                                <linearGradient
-                                    id="volumeFill"
-                                    x1="0"
-                                    y1="0"
-                                    x2="0"
-                                    y2="1"
-                                >
-                                    <stop
-                                        offset="5%"
-                                        stopColor="#3b82f6"
-                                        stopOpacity={0.25}
-                                    />
-                                    <stop
-                                        offset="95%"
-                                        stopColor="#3b82f6"
-                                        stopOpacity={0}
-                                    />
+                                <linearGradient id="volumeFill" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.25} />
+                                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                                 </linearGradient>
                             </defs>
-
-                            <CartesianGrid
-                                stroke="#E5E7EB"
-                                strokeDasharray="4 4"
-                                vertical={false}
-                            />
-
-                            <XAxis
-                                dataKey="day"
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{
-                                    fill: "#6B7280",
-                                    fontSize: 12,
-                                    fontWeight: 500
-                                }}
-                            />
-                            <YAxis
-                                ticks={getYAxisTicks()}
-                                tickFormatter={(value) => formatCurrency(value)}
-                                axisLine={false}
-                                tickLine={false}
-                                tick={{
-                                    fill: "#6B7280",
-                                    fontSize: 12
-                                }}
-                            />
-                            <Tooltip
-                                formatter={(value) => [
-                                    formatCurrency(value),
-                                    "Volume"
-                                ]}
-                                cursor={{
-                                    stroke: "#2563EB",
-                                    strokeDasharray: "5 5"
-                                }}
-                                contentStyle={{
-                                    borderRadius: "14px",
-                                    border: "none",
-                                    boxShadow: "0 10px 25px rgba(0,0,0,.12)",
-                                    fontSize: "13px"
-                                }}
-                            />
-                            <Area
-                                type="monotone"
-                                dataKey="volume"
-                                stroke="#2563EB"
-                                strokeWidth={3}
-                                fill="url(#volumeFill)"
-                                dot={{
-                                    r: 4,
-                                    fill: "#2563EB",
-                                    stroke: "#fff",
-                                    strokeWidth: 2
-                                }}
-                                activeDot={{
-                                    r: 7,
-                                    fill: "#2563EB",
-                                    stroke: "#fff",
-                                    strokeWidth: 3
-                                }}
-                            />
+                            <CartesianGrid stroke="#E5E7EB" strokeDasharray="4 4" vertical={false} />
+                            <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: "#6B7280", fontSize: 11, fontWeight: 500 }} />
+                            <YAxis ticks={getYAxisTicks()} tickFormatter={(value) => formatCurrency(value)} axisLine={false} tickLine={false} tick={{ fill: "#6B7280", fontSize: 11 }} />
+                            <Tooltip formatter={(value) => [formatCurrency(value), "Volume"]} cursor={{ stroke: "#2563EB", strokeDasharray: "5 5" }} contentStyle={{ borderRadius: "14px", border: "none", boxShadow: "0 10px 25px rgba(0,0,0,.12)", fontSize: "13px" }} />
+                            <Area type="monotone" dataKey="volume" stroke="#2563EB" strokeWidth={2.5} fill="url(#volumeFill)" dot={{ r: 3, fill: "#2563EB", stroke: "#fff", strokeWidth: 2 }} activeDot={{ r: 6, fill: "#2563EB", stroke: "#fff", strokeWidth: 3 }} />
                         </AreaChart>
                     </ResponsiveContainer>
                 </div>
                 <div>
-                    <p className="text-center font-normal text-gray-500">
-                        Days
-                    </p>
+                    <p className="text-center font-normal text-gray-500 xl:text-xs">Days</p>
                 </div>
             </div>
         </div>

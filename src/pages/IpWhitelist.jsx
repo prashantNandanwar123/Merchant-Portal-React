@@ -63,13 +63,13 @@ export default function IpWhitelist() {
     };
 
     return (
-        <div className="p-8 bg-[#f5f6fa] min-h-screen">
-            <div className="max-w-5xl mx-auto bg-white border border-gray-200 rounded-2xl p-5">
-                <h3 className="text-lg font-semibold mb-5 uppercase">
+        <div className="p-4 sm:p-6 lg:p-8 bg-[#f5f6fa] min-h-[calc(100vh-64px)] overflow-y-auto">
+            <div className="max-w-5xl mx-auto bg-white border border-gray-200 rounded-2xl p-4 sm:p-6">
+                <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-5 uppercase">
                     IP Whitelisting
                 </h3>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                     <input
                         type="text"
                         value={ip}
@@ -78,11 +78,11 @@ export default function IpWhitelist() {
                             setIp(value);
                         }}
                         placeholder="Enter IP address (e.g. 192.168.1.1)"
-                        className="flex-1 border border-gray-300 rounded-md px-4 py-2 outline-none"
+                        className="flex-1 border border-gray-300 rounded-md px-4 py-2 text-sm outline-none focus:border-blue-500"
                     />
                     <button
                         onClick={handleAddIp}
-                        className="px-5 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50"
+                        className="w-full sm:w-auto px-5 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 font-medium text-sm cursor-pointer"
                     >
                         Add IP
                     </button>

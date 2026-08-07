@@ -34,10 +34,11 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return;
         setLoading(true);
-
         try {
             const response = await axiosInstance.post("/auth/submitLogin", {
                 userId: userId,
@@ -64,23 +65,17 @@ export default function Login() {
         } catch (error) {
             toast.error(error);
         }
+        finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center p-4 overflow-y-auto login-bg">
-            <div className="w-full 
-                max-w-2xl
-                max-h-[80vh]
-                bg-white
-                rounded-2xl
-                shadow-2xl
-                flex
-                flex-col
-                md:flex-row
-                "
-            >
+        <div className="min-h-screen w-full flex items-center justify-center p-4 py-8 overflow-y-auto login-bg">
+            <div className="w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl bg-white rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden my-auto">
                 {/* ================= LEFT SIDE ================= */}
-                <div className="hidden md:flex md:w-[35%] bg-[#040F25] relative text-white overflow-hidden md:rounded-l-2xl">                    {/* Background Pattern */}
+                <div className="hidden md:flex md:w-[35%] bg-[#040F25] relative text-white overflow-hidden md:rounded-l-2xl">
+                    {/* Background Pattern */}
                     <div className="absolute inset-0 bg-cover bg-center opacity-20" />
                     <div className="relative z-10 flex flex-col justify-between h-full w-full">
                         {/* Logo */}
@@ -169,8 +164,8 @@ export default function Login() {
                 </div>
 
                 {/* ================= RIGHT SIDE ================= */}
-                <div className="flex-1 relative bg-cover bg-right bg-no-repeat md:rounded-r-2xl px-4">
-                    <div className="relative z-10 flex justify-center items-center min-h-full py-6 xl:py-2 md:px-2 lg:px-6">
+                <div className="flex-1 relative bg-cover bg-right bg-no-repeat md:rounded-r-2xl p-5">
+                    <div className="relative z-10 flex justify-center items-center min-h-full py-6 xl:py-2 md:px-2 lg:px-8">
                         <div className="w-full max-w-md">
                             {/* Mobile Logo */}
                             <div className="md:hidden flex justify-center mb-8">
@@ -267,6 +262,23 @@ export default function Login() {
                                         />
                                         Remember me
                                     </label>
+
+                                </div>
+                                {/* LOGIN BUTTON */}
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className={`w-full h-10 rounded-xl text-[#071C39] font-semibold text-lg transition flex items-center justify-center gap-3 shadow-md
+                                              ${loading
+                                            ? "bg-gray-300 cursor-not-allowed"
+                                            : "bg-[#FDB913] hover:bg-[#f3aa00] cursor-pointer"
+                                        }`}
+                                >
+                                    <TbLogin2 />
+                                    {loading ? "Logging In..." : "Log In"}
+                                </button>
+
+                                <div className="flex justify-between items-center">
                                     <button
                                         type="button"
                                         onClick={() => navigate("/forgot")}
@@ -274,15 +286,14 @@ export default function Login() {
                                     >
                                         Forgot Password?
                                     </button>
+
+                                    <button
+                                        type="button"
+                                        className="text-[#3498db] text-sm  cursor-pointer"
+                                    >
+                                        Became A Reseller
+                                    </button>
                                 </div>
-                                {/* LOGIN BUTTON */}
-                                <button
-                                    type="submit"
-                                    className="w-full cursor-pointer h-10 rounded-xl bg-[#FDB913] hover:bg-[#f3aa00] text-[#071C39] font-semibold text-lg transition flex items-center justify-center gap-3 shadow-md"
-                                >
-                                    <TbLogin2 />
-                                    Log In
-                                </button>
 
                                 {/* Divider */}
                                 <div className="flex items-center gap-4 pt-2">

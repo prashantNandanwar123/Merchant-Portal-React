@@ -97,31 +97,31 @@ export default function CreatePaymentLinkModal({
     return (
         
         <div
-            className="fixed inset-0 bg-black/40 flex justify-center items-center z-50"
+            className="fixed inset-0 bg-black/40 flex justify-center items-center z-50 p-4"
             onClick={onClose}
         >
             {/* First popup: only render when second popup is NOT open */}
             {!showLinkPopup && (
                 <div
-                    className="bg-white rounded-xl w-[420px] shadow-xl"
+                    className="bg-white rounded-xl w-full max-w-[420px] shadow-xl max-h-[90vh] overflow-y-auto"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
-                    <div className="flex justify-between items-center px-6 py-5 border-b">
-                        <h2 className="text-xl font-semibold">Create Payment Link</h2>
-                        <button onClick={onClose}>
+                    <div className="flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 border-b">
+                        <h2 className="text-lg sm:text-xl font-semibold">Create Payment Link</h2>
+                        <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-md">
                             <X size={20} />
                         </button>
                     </div>
 
-                    <div className="p-6 space-y-4">
+                    <div className="p-4 sm:p-6 space-y-4">
                         {/* Order ID */}
                         <div>
                             <label className="text-sm font-medium">Order ID</label>
                             <input
                                 value={paymentData.orderId || ""}
                                 readOnly
-                                className="w-full border rounded-lg px-3 py-3 mt-1 bg-gray-100"
+                                className="w-full border rounded-lg px-3 py-2.5 sm:py-3 mt-1 bg-gray-100 text-sm"
                             />
                         </div>
 
@@ -131,7 +131,7 @@ export default function CreatePaymentLinkModal({
                             <input
                                 value={paymentData.mode || ""}
                                 readOnly
-                                className="w-full border rounded-lg px-3 py-3 mt-1 bg-gray-100"
+                                className="w-full border rounded-lg px-3 py-2.5 sm:py-3 mt-1 bg-gray-100 text-sm"
                             />
                         </div>
 
@@ -149,27 +149,27 @@ export default function CreatePaymentLinkModal({
                                         agentName: e.target.value,
                                     }))
                                 }
-                                className="w-full border rounded-lg px-3 py-3 mt-1"
+                                className="w-full border rounded-lg px-3 py-2.5 sm:py-3 mt-1 text-sm outline-none focus:border-blue-500"
                                 placeholder="Agent Name"
                             />
                         </div>
                     </div>
 
-                    <div className="flex justify-end gap-3 px-6 py-5 border-t">
-                        <button onClick={onClose} className="px-5 py-2 border rounded-lg">
+                    <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-4 border-t">
+                        <button onClick={onClose} className="w-full sm:w-auto px-4 py-2 border rounded-lg text-sm font-medium">
                             Cancel
                         </button>
                         <button
                             onClick={handleGenerate}
                             disabled={creating}
-                            className="px-5 py-2 border border-blue-600 text-blue-600 rounded-lg"
+                            className="w-full sm:w-auto px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium"
                         >
                             {creating ? "Generating..." : "Generate Link"}
                         </button>
                         <button
                             onClick={handleGenerate}
                             disabled={creating}
-                            className="px-5 py-2 bg-blue-600 text-white rounded-lg"
+                            className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium"
                         >
                             Generate and Share
                         </button>
@@ -180,11 +180,11 @@ export default function CreatePaymentLinkModal({
             {/* Second popup */}
             {showLinkPopup && (
                 <div
-                    className="fixed inset-0 bg-black/40 flex justify-center items-center z-[60]"
+                    className="fixed inset-0 bg-black/40 flex justify-center items-center z-[60] p-4"
                     onClick={handleCloseAll}
                 >
                     <div
-                        className="bg-white rounded-xl w-[600px] max-w-[95vw] shadow-xl overflow-hidden"
+                        className="bg-white rounded-xl w-full max-w-lg shadow-xl overflow-hidden max-h-[90vh] flex flex-col"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}

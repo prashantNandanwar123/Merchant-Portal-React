@@ -156,20 +156,20 @@ export default function PaymentLinks() {
 
     return (
         <>
-            <div className="bg-white lg:px-10 px-5">
+            <div className="bg-white px-3 sm:px-6 lg:px-10 xl:px-6">
                 {/* Header */}
-                <div className="flex items-center justify-between lg:px-6 py-5 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 xl:gap-2 py-5 xl:py-3 border-b border-gray-100">
                     {/* Title + Subtitle */}
                     <div>
-                        <h1 className="text-xl lg:text-2xl font-semibold text-gray-900">
+                        <h1 className="text-xl lg:text-2xl xl:text-lg font-semibold text-gray-900">
                             Payment Links
                         </h1>
-                        <p className="text-sm lg:text-base text-gray-500 mt-1">
+                        <p className="text-xs sm:text-sm lg:text-base xl:text-xs text-gray-500 mt-1">
                             Generate secure payment links and share them with customers instantly.
                         </p>
                     </div>
                     {/* Button */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 shrink-0">
                         <button
                             onClick={() => {
                                 setPaymentData({
@@ -179,7 +179,7 @@ export default function PaymentLinks() {
                                 });
                                 setOpenModal(true);
                             }}
-                            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2.5 rounded-lg"
+                            className="w-full sm:w-auto flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm xl:text-xs font-medium px-4 py-2.5 xl:px-3 xl:py-2 rounded-lg"
                         >
                             <Plus size={16} />
                             New Payment Link
@@ -188,12 +188,12 @@ export default function PaymentLinks() {
                 </div>
 
                 {/* Tabs */}
-                <div className="flex items-center gap-6 px-6 border-b border-gray-100">
+                <div className="flex items-center gap-4 sm:gap-6 xl:gap-3 px-3 sm:px-6 xl:px-2 border-b border-gray-100 overflow-x-auto hide-scrollbar">
                     {TABS.map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === tab
+                            className={`py-3 xl:py-2 text-sm xl:text-xs font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === tab
                                 ? "border-blue-600 text-blue-600"
                                 : "border-transparent text-gray-500 hover:text-gray-700"
                                 }`}
@@ -204,14 +204,14 @@ export default function PaymentLinks() {
                 </div>
 
                 {/* Filters */}
-                <div className="w-full bg-white border border-gray-200 rounded-md p-3 flex flex-wrap items-center justify-between gap-3">
+                <div className="w-full bg-white border border-gray-200 rounded-md p-3 xl:p-2 my-4 xl:my-2.5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 xl:gap-2">
                     {/* Left Side - From Date + To Date */}
-                    <div className="flex items-center gap-6">
+                    <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-6 xl:gap-3">
                         {/* From Date */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-1 sm:flex-initial">
                             <label
                                 htmlFor="fromDate"
-                                className="text-sm font-medium text-gray-700 whitespace-nowrap"
+                                className="text-xs sm:text-sm xl:text-xs font-medium text-gray-700 whitespace-nowrap"
                             >
                                 From Date
                             </label>
@@ -221,15 +221,15 @@ export default function PaymentLinks() {
                                 type="date"
                                 value={fromDate}
                                 onChange={(e) => setFromDate(e.target.value)}
-                                className="w-[140px] h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                className="w-full sm:w-[140px] xl:w-[130px] h-10 sm:h-11 xl:h-9 rounded-lg border border-gray-300 bg-white px-3 xl:px-2 text-xs sm:text-sm xl:text-xs font-medium text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                             />
                         </div>
 
                         {/* To Date */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-1 sm:flex-initial">
                             <label
                                 htmlFor="toDate"
-                                className="text-sm font-medium text-gray-700 whitespace-nowrap"
+                                className="text-xs sm:text-sm xl:text-xs font-medium text-gray-700 whitespace-nowrap"
                             >
                                 To Date
                             </label>
@@ -239,7 +239,7 @@ export default function PaymentLinks() {
                                 type="date"
                                 value={toDate}
                                 onChange={(e) => setToDate(e.target.value)}
-                                className="w-[140px] h-11 rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                className="w-full sm:w-[140px] xl:w-[130px] h-10 sm:h-11 xl:h-9 rounded-lg border border-gray-300 bg-white px-3 xl:px-2 text-xs sm:text-sm xl:text-xs font-medium text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                             />
                         </div>
                     </div>
@@ -247,17 +247,17 @@ export default function PaymentLinks() {
                     {/* Right Side - Search Button */}
                     <button
                         onClick={fetchManualOrders}
-                        className="h-11 px-6 sm:px-8 rounded-lg bg-[#1565F7] text-white font-medium border border-[#0D47A1] whitespace-nowrap hover:bg-[#0D5BE1] transition-colors"
+                        className="h-10 sm:h-11 xl:h-9 px-6 sm:px-8 xl:px-5 rounded-lg bg-[#1565F7] text-white font-medium text-sm xl:text-xs border border-[#0D47A1] whitespace-nowrap hover:bg-[#0D5BE1] transition-colors w-full sm:w-auto"
                     >
                         Search
                     </button>
                 </div>
 
                 {/* Show entries row */}
-                <div className="flex w-full items-center justify-between px-4 py-2">
+                <div className="flex flex-col sm:flex-row w-full items-start sm:items-center justify-between gap-3 xl:gap-2 py-2 xl:py-1.5">
                     {/* Show Entries - Left Side */}
                     <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm xl:text-xs text-gray-600">
                             Show
                         </span>
                         <select
@@ -266,19 +266,19 @@ export default function PaymentLinks() {
                                 setSize(Number(e.target.value));
                                 setPage(0);
                             }}
-                            className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-yellow-400"
+                            className="rounded-lg border border-gray-300 px-3 py-2 xl:px-2 xl:py-1 text-sm xl:text-xs outline-none focus:ring-2 focus:ring-yellow-400"
                         >
                             <option value={10}>10</option>
                             <option value={20}>20</option>
                             <option value={50}>50</option>
                         </select>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm xl:text-xs text-gray-600">
                             entries
                         </span>
                     </div>
 
                     {/* Search - Right Side */}
-                    <div className="relative w-80">
+                    <div className="relative w-full sm:w-72 md:w-80 xl:w-64">
                         <Search
                             size={17}
                             className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -288,118 +288,119 @@ export default function PaymentLinks() {
                             placeholder="Search Agent / MID / Order ID..."
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
-                            className="h-11 w-full rounded-lg border border-gray-300 bg-white pl-10 pr-4 text-sm outline-none placeholder:text-gray-400"
+                            className="h-10 sm:h-11 xl:h-9 w-full rounded-lg border border-gray-300 bg-white pl-10 pr-4 text-xs sm:text-sm xl:text-xs outline-none placeholder:text-gray-400"
                         />
                     </div>
                 </div>
 
                 {/* Table */}
-                <div className="overflow-x-auto overflow-y-auto max-h-[495px] bg-white rounded-xl shadow-sm border border-gray-100">                    <table className="w-full min-w-[1200px] text-sm table-fixed">
-                    <thead className="sticky top-0 bg-white z-10">
-                        <tr className="border-b border-gray-200">
-                            <th className="w-[6%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-3">
-                                S.No
-                            </th>
-                            <th className="w-[15%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-3">
-                                Order ID
-                            </th>
-                            <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-2">
-                                MID
-                            </th>
-                            <th className="w-[12%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-2">
-                                Agent
-                            </th>
-                            <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-2">
-                                Mode
-                            </th>
-                            <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-2">
-                                Amount
-                            </th>
-                            <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-2">
-                                Status
-                            </th>
-                            <th className="w-[12%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-2">
-                                Link Status
-                            </th>
-                            <th className="w-[12%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-2">
-                                Date
-                            </th>
-                            <th className="w-[15%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 py-2">
-                                Url
-                            </th>
-                        </tr>
-                    </thead>
+                <div className="overflow-x-auto overflow-y-auto max-h-[495px] xl:max-h-[220px] bg-white rounded-xl shadow-sm border border-gray-100">
+                    <table className="w-full min-w-[1200px] text-sm xl:text-[11px] table-fixed">
+                        <thead className="sticky top-0 bg-white z-10">
+                            <tr className="border-b border-gray-200">
+                                <th className="w-[6%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1">
+                                    S.No
+                                </th>
+                                <th className="w-[15%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1">
+                                    Order ID
+                                </th>
+                                <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1">
+                                    MID
+                                </th>
+                                <th className="w-[12%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1">
+                                    Agent
+                                </th>
+                                <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1">
+                                    Mode
+                                </th>
+                                <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1">
+                                    Amount
+                                </th>
+                                <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1">
+                                    Status
+                                </th>
+                                <th className="w-[12%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1">
+                                    Link Status
+                                </th>
+                                <th className="w-[12%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1">
+                                    Date
+                                </th>
+                                <th className="w-[15%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1">
+                                    Url
+                                </th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        {displayData.length > 0 ? (
-                            displayData.map((acc, index) => (
-                                <tr
-                                    key={acc.id}
-                                    className="border-b border-gray-50 hover:bg-gray-50/50 h-[45px]"
-                                >
-                                    <td className="px-4 py-2 text-gray-600 font-medium">
-                                        {page * size + index + 1}
-                                    </td>
-                                    <td className="px-4 py-2 text-blue-600 font-medium">
-                                        {acc.orderId}
-                                    </td>
-                                    <td className="px-4 py-2 text-gray-600">
-                                        {acc.mid}
-                                    </td>
+                        <tbody>
+                            {displayData.length > 0 ? (
+                                displayData.map((acc, index) => (
+                                    <tr
+                                        key={acc.id}
+                                        className="border-b border-gray-50 hover:bg-gray-50/50 h-[45px] xl:h-[26px]"
+                                    >
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-gray-600 font-medium">
+                                            {page * size + index + 1}
+                                        </td>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-blue-600 font-medium">
+                                            {acc.orderId}
+                                        </td>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-gray-600">
+                                            {acc.mid}
+                                        </td>
 
-                                    <td className="px-4 py-2 text-gray-600">
-                                        {acc.agentName}
-                                    </td>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-gray-600">
+                                            {acc.agentName}
+                                        </td>
 
-                                    <td className="px-4 py-2 text-gray-600">
-                                        {acc.mode}
-                                    </td>
-                                    <td className="px-4 py-2 text-gray-600">
-                                        ₹
-                                        {Number(acc.txnAmount).toLocaleString("en-IN", {
-                                            minimumFractionDigits: 2,
-                                        })}
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        <StatusBadge status={acc.orderStatus} />
-                                    </td>
-                                    <td className="px-4 py-2 text-gray-600">
-                                        {acc.linkStatus}
-                                    </td>
-                                    <td className="px-4 py-2 text-gray-600">
-                                        {acc.creation_Date}
-                                    </td>
-                                    <td className="px-4 py-2 text-blue-600">
-                                        <a
-                                            href={acc.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="hover:underline"
-                                        >
-                                            View Link
-                                        </a>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-gray-600">
+                                            {acc.mode}
+                                        </td>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-gray-600">
+                                            ₹
+                                            {Number(acc.txnAmount).toLocaleString("en-IN", {
+                                                minimumFractionDigits: 2,
+                                            })}
+                                        </td>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5">
+                                            <StatusBadge status={acc.orderStatus} />
+                                        </td>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-gray-600">
+                                            {acc.linkStatus}
+                                        </td>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-gray-600">
+                                            {acc.creation_Date}
+                                        </td>
+                                        <td className="px-4 xl:px-2 py-2 xl:py-0.5 text-blue-600">
+                                            <a
+                                                href={acc.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="hover:underline" 
+                                            >
+                                                View Link
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td
+                                        colSpan={9}
+                                        className="text-center py-10 xl:py-6 text-gray-400"
+                                    >
+                                        No Payment Links Found
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td
-                                    colSpan={9}
-                                    className="text-center py-10 text-gray-400"
-                                >
-                                    No Payment Links Found
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                            )}
+                        </tbody>
+                    </table>
                 </div>
 
                 {/* ================= Pagination ================= */}
-                <div className="bg-white border border-gray-100 rounded-2xl shadow-sm px-4 sm:px-6 py-4 lg:mb-0 my-5">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div className="bg-white border border-gray-100 rounded-2xl shadow-sm px-4 sm:px-6 xl:px-4 py-4 xl:py-2 lg:mb-0 my-5 xl:my-2">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 xl:gap-2">
                         {/* Left Side */}
-                        <div className="text-sm text-gray-500 text-center md:text-left">
+                        <div className="text-sm xl:text-xs text-gray-500 text-center md:text-left">
                             {totalRecords > 0 ? (
                                 <>
                                     Showing{" "}
@@ -421,37 +422,43 @@ export default function PaymentLinks() {
                             )}
                         </div>
                         {/* Right Side */}
-                        <div className="flex items-center justify-center gap-2">
+                        <div className="flex items-center justify-center gap-2 xl:gap-1.5">
                             <button
                                 disabled={page === 0}
                                 onClick={() => setPage(page - 1)}
                                 className="
-                                px-4
-                                py-2
-                                rounded-lg
-                                border
-                                bg-white
-                                hover:bg-gray-100
-                                disabled:opacity-50
-                                disabled:cursor-not-allowed
-                                transition
-                                "
+    px-4
+    py-2
+    xl:px-3
+    xl:py-1.5
+    xl:text-sm
+    rounded-lg
+    border
+    bg-white
+    hover:bg-gray-100
+    disabled:opacity-50
+    disabled:cursor-not-allowed
+    transition
+    "
                             >
                                 Prev
                             </button>
 
                             <div className="
-                            min-w-[42px]
-                            h-[42px]
-                            rounded-lg
-                            bg-yellow-500
-                            text-white
-                            flex
-                            items-center
-                            justify-center
-                            font-semibold
-                            shadow
-                            ">
+min-w-[42px]
+h-[42px]
+xl:min-w-[34px]
+xl:h-[34px]
+xl:text-sm
+rounded-lg
+bg-yellow-500
+text-white
+flex
+items-center
+justify-center
+font-semibold
+shadow
+">
                                 {page + 1}
                             </div>
 
@@ -459,16 +466,19 @@ export default function PaymentLinks() {
                                 disabled={page + 1 >= totalPages}
                                 onClick={() => setPage(page + 1)}
                                 className="
-                                px-4
-                                py-2
-                                rounded-lg
-                                border
-                                bg-white
-                                hover:bg-gray-100
-                                disabled:opacity-50
-                                disabled:cursor-not-allowed
-                                transition
-                                "
+    px-4
+    py-2
+    xl:px-3
+    xl:py-1.5
+    xl:text-sm
+    rounded-lg
+    border
+    bg-white
+    hover:bg-gray-100
+    disabled:opacity-50
+    disabled:cursor-not-allowed
+    transition
+    "
                             >
                                 Next
                             </button>
@@ -477,12 +487,12 @@ export default function PaymentLinks() {
                 </div>
 
                 <CreatePaymentLinkModal
-                    isOpen={openModal}//true
+                    isOpen={openModal}
                     onClose={handleClosePaymentModal}
-                    data={paymentData} //api ka response
-                    createPaymentLink={createPaymentLink}  //api call hua
+                    data={paymentData}
+                    createPaymentLink={createPaymentLink}
                 />
-            </div>
+            </div >
         </>
     );
 }
