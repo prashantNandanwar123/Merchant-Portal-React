@@ -5,7 +5,6 @@ import { FaChartLine, FaCheck, FaClock, FaArrowDown } from "react-icons/fa";
 const CryptoDashboard = () => {
     const [activeTab, setActiveTab] = useState("ONRAMP");
 
-
     const today = new Date();
 
     const year = today.getFullYear();
