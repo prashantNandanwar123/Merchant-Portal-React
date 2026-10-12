@@ -1,0 +1,662 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+        <%@page import="java.util.Date" %>
+            <%@page import="java.text.SimpleDateFormat" %>
+                <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+                    <% Date date=new Date(); SimpleDateFormat df=new SimpleDateFormat("yyMMddkkmmssSSS"); %>
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Hellope - Buy Crypto</title>
+                            <link href="/assets/img/Hellope-Logo.jpg" rel="icon" type="image/png" />
+                            <link
+                                href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+                                rel="stylesheet">
+
+                            <style>
+                                :root {
+                                    --primary-yellow: #fec931;
+                                    --bg-color: #F8F9FA;
+                                    --text-dark: #1A1A1A;
+                                    --text-gray: #6B7280;
+                                    --border-color: #E5E7EB;
+                                    --green-text: #10B981;
+                                    --selected-border: #3B82F6;
+                                    /* Blue for selected payment mode */
+                                }
+
+                                body {
+                                    font-family: 'Inter', sans-serif;
+                                    margin: 0;
+                                    padding: 0;
+                                    background-color: var(--bg-color);
+                                    color: var(--text-dark);
+                                }
+
+                                nav {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    padding: 15px 40px;
+                                    background-color: white;
+                                    border-bottom: 1px solid var(--border-color);
+                                }
+
+                                .nav-links {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                }
+
+                                .nav-links a {
+                                    padding: 8px 16px;
+                                    border-radius: 6px;
+                                    text-decoration: none;
+                                    color: #000;
+                                    transition: background-color 0.2s ease;
+                                }
+
+                                .nav-links a:hover {
+                                    background-color: #FDB913;
+                                    color: black;
+                                }
+
+                                .logo {
+                                    font-size: 24px;
+                                    font-weight: 700;
+                                    color: var(--text-dark);
+                                    display: flex;
+                                    align-items: center;
+                                }
+
+                                .logo span {
+                                    color: var(--primary-yellow);
+                                }
+
+                                .nav-actions button {
+                                    padding: 8px 20px;
+                                    border-radius: 6px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    margin-left: 10px;
+                                    font-size: 14px;
+                                }
+
+                                .btn-sell {
+                                    background: white;
+                                    border: 1px solid var(--border-color);
+                                    color: var(--text-dark);
+                                }
+
+                                .btn-buy-nav {
+                                    background: var(--primary-yellow);
+                                    border: none;
+                                    color: var(--text-dark);
+                                }
+
+                                .buy-container {
+                                    max-width: 500px;
+                                    margin: 60px auto;
+                                    background: white;
+                                    padding: 30px;
+                                    border-radius: 16px;
+                                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+                                }
+
+                                .buy-container h2 {
+                                    margin-top: 0;
+                                    margin-bottom: 25px;
+                                    font-size: 22px;
+                                }
+
+                                .form-label {
+                                    display: block;
+                                    font-size: 14px;
+                                    font-weight: 600;
+                                    color: var(--text-gray);
+                                    margin-bottom: 8px;
+                                }
+
+                                /* --- SEARCHABLE DROPDOWN STYLES --- */
+                                .custom-select-wrapper {
+                                    position: relative;
+                                    margin-bottom: 25px;
+                                }
+
+                                .custom-select {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    padding: 0 15px;
+                                    background: #F9FAFB;
+                                    border: 1px solid var(--border-color);
+                                    border-radius: 12px;
+                                    cursor: pointer;
+                                    height: 56px;
+                                }
+
+                                #searchInput {
+                                    width: 100%;
+                                    border: none;
+                                    background: transparent;
+                                    font-size: 16px;
+                                    font-weight: 600;
+                                    outline: none;
+                                    color: var(--text-dark);
+                                    height: 100%;
+                                    font-family: 'Inter', sans-serif;
+                                }
+
+                                #searchInput::placeholder {
+                                    color: #9CA3AF;
+                                    font-weight: 400;
+                                }
+
+                                /* Visual representation of selected item (when not typing) */
+                                .selected-display {
+                                    display: none;
+                                    /* Hidden by default */
+                                    align-items: center;
+                                    gap: 8px;
+                                    position: absolute;
+                                    left: 15px;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    background: #F9FAFB;
+                                    width: calc(100% - 50px);
+                                    z-index: 10;
+                                    pointer-events: none;
+                                }
+
+                                /* Style for the symbol text */
+                                .selected-display .symbol-text {
+                                    font-weight: 700;
+                                    font-size: 16px;
+                                    color: var(--text-dark);
+                                }
+
+                                /* Style for the network text */
+                                .selected-display .network-text {
+                                    color: var(--text-gray);
+                                    font-weight: 400;
+                                    font-size: 14px;
+                                }
+
+                                /* Hide the placeholder text when a token is selected */
+                                .custom-select.has-selection #searchInput::placeholder {
+                                    color: transparent;
+                                }
+
+                                /* Hide the input text itself when a token is selected (we use the display div instead) */
+                                .custom-select.has-selection #searchInput {
+                                    color: transparent;
+                                }
+
+                                .custom-select .arrow {
+                                    color: var(--text-gray);
+                                    pointer-events: none;
+                                }
+
+                                .dropdown-menu {
+                                    position: absolute;
+                                    top: 100%;
+                                    left: 0;
+                                    right: 0;
+                                    background: white;
+                                    border: 1px solid var(--border-color);
+                                    border-radius: 12px;
+                                    margin-top: 5px;
+                                    max-height: 250px;
+                                    overflow-y: auto;
+                                    z-index: 100;
+                                    display: none;
+                                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                                }
+
+                                .dropdown-menu.active {
+                                    display: block;
+                                }
+
+                                .dropdown-item {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    padding: 15px;
+                                    cursor: pointer;
+                                    border-bottom: 1px solid var(--border-color);
+                                }
+
+                                .dropdown-item:last-child {
+                                    border-bottom: none;
+                                }
+
+                                .dropdown-item:hover {
+                                    background: #F3F4F6;
+                                }
+
+                                .dropdown-item .item-left {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 10px;
+                                }
+
+                                .icon-placeholder {
+                                    width: 30px;
+                                    height: 30px;
+                                    border-radius: 50%;
+                                    background: #E5E7EB;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    font-size: 12px;
+                                    font-weight: bold;
+                                    overflow: hidden;
+                                }
+
+                                .icon-placeholder img {
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                }
+
+                                /* Amount Input Section */
+                                #amountSection {
+                                    display: none;
+                                    margin-bottom: 25px;
+                                }
+
+                                .amount-input-wrapper {
+                                    position: relative;
+                                    display: flex;
+                                    align-items: center;
+                                    background: #F9FAFB;
+                                    border: 1px solid var(--border-color);
+                                    border-radius: 12px;
+                                    padding: 0 15px;
+                                }
+
+                                .amount-input-wrapper input {
+                                    width: 100%;
+                                    padding: 15px 0;
+                                    border: none;
+                                    background: transparent;
+                                    font-size: 18px;
+                                    font-weight: 600;
+                                    outline: none;
+                                }
+
+                                .amount-input-wrapper input::placeholder {
+                                    color: #9CA3AF;
+                                    font-weight: 400;
+                                }
+
+                                .currency-label {
+                                    font-weight: 700;
+                                    color: var(--text-dark);
+                                    margin-left: 10px;
+                                }
+
+                                /* --- PAYMENT MODE STYLES --- */
+                                .payment-section {
+                                    display: none;
+                                    /* Hidden initially */
+                                    margin-bottom: 25px;
+                                }
+
+                                .payment-options {
+                                    display: flex;
+                                    gap: 10px;
+                                }
+
+                                /* Hide actual radio buttons */
+                                .payment-options input[type="radio"] {
+                                    display: none;
+                                }
+
+                                /* Style the labels as clickable cards */
+                                .payment-options label {
+                                    flex: 1;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    padding: 12px;
+                                    background: #F9FAFB;
+                                    border: 1px solid var(--border-color);
+                                    border-radius: 8px;
+                                    cursor: pointer;
+                                    font-weight: 600;
+                                    font-size: 14px;
+                                    color: var(--text-gray);
+                                    transition: all 0.2s;
+                                }
+
+                                .payment-options label:hover {
+                                    background: #F3F4F6;
+                                }
+
+                                /* Style when selected */
+                                .payment-options input[type="radio"]:checked+label {
+                                    background: white;
+                                    border-color: var(--selected-border);
+                                    color: var(--text-dark);
+                                    box-shadow: 0 0 0 1px var(--selected-border);
+                                }
+
+                                .btn-continue {
+                                    width: 100%;
+                                    padding: 15px;
+                                    background: var(--primary-yellow);
+                                    border: none;
+                                    border-radius: 8px;
+                                    font-weight: 600;
+                                    font-size: 16px;
+                                    cursor: pointer;
+                                    color: var(--text-dark);
+                                    display: none;
+                                }
+
+                                .btn-continue:disabled {
+                                    opacity: 0.5;
+                                    cursor: not-allowed;
+                                }
+
+                                .nav-links a {
+                                    text-decoration: none;
+                                    color: var(--text-gray);
+                                    margin: 0 15px;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                }
+                            </style>
+                        </head>
+
+                        <body>
+
+                            <!-- Navigation Bar -->
+                            <nav>
+                                <div class="logo">
+                                    Hello<span>Pe</span>
+                                </div>
+                                <div class="nav-links">
+                                    <a href="/api/onmeta/transaction-request">Home</a> <a
+                                        href="/api/onmeta/fetchToken-request">Buy Crypto</a>
+                                    <a href="#">Sell Crypto</a>
+                                </div>
+                            </nav>
+
+                            <div class="buy-container">
+                                <h2>I want to Buy</h2>
+                                <form action="/api/onmeta/createOnrampOrder-request" method="POST" id="buyForm">
+                                    <input type="hidden" name="upiId" value="8788655233@ptaxis" /> <input type="hidden"
+                                        name="chainId" id="inputChainId" /> <input type="hidden" name="buyTokenSymbol"
+                                        id="inputSymbol" /> <input type="hidden" name="fiatCurrency" value="INR" />
+
+                                    <!-- HIDDEN INPUT FOR PAYMENT MODE -->
+                                    <input type="hidden" name="paymentMode" id="inputPaymentMode" value="INR_UPI" />
+                                    <!-- MERCHANT  ID -->
+                                    <div class="form-group" style="margin-bottom: 20px;">
+                                        <label class="form-label" style="color: var(--text-gray);">
+                                            Merchant Id <span class="required">*</span>
+                                        </label> <input type="text" name="merchantId" value="900000000001"
+                                            placeholder="Enter merchantId" maxlength="15" inputmode="numeric"
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                            style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                    </div>
+                                    
+                                    <!-- SEARCHABLE DROPDOWN -->
+                                    <div class="custom-select-wrapper">
+                                        <label class="form-label">Select Crypto</label>
+                                        <div class="custom-select" onclick="openDropdown()">
+                                            <div class="selected-display" id="selectedItemDisplay">
+                                                <span style="color: #9CA3AF; font-weight: 400;">Select a
+                                                    token...</span>
+                                            </div>
+                                            <input type="text" id="searchInput" placeholder="Select a token..."
+                                                autocomplete="off" oninput="filterDropdown()"
+                                                onfocus="openDropdown()" />
+                                            <span class="arrow">&#9660;</span>
+                                        </div>
+
+                                        <div class="dropdown-menu" id="dropdownMenu">
+                                            <c:choose>
+                                                <c:when test="${not empty tokenList}">
+                                                    <c:forEach var="token" items="${tokenList}">
+                                                        <div class="dropdown-item"
+                                                            data-symbol="${fn:escapeXml(token.symbol)}"
+                                                            data-name="${fn:escapeXml(token.name)}"
+                                                            onclick="selectToken('${fn:escapeXml(token.symbol)}', '${fn:escapeXml(token.name)}', '${fn:escapeXml(token.chainId)}', '${fn:escapeXml(token.address)}', '${fn:escapeXml(token.logoUrl)}')">
+                                                            <div class="item-left">
+                                                                <div class="icon-placeholder">
+                                                                    <c:choose>
+                                                                        <c:when test="${not empty token.logoUrl}">
+                                                                            <img src="${fn:escapeXml(token.logoUrl)}"
+                                                                                alt="${fn:escapeXml(token.symbol)}"
+                                                                                onerror="this.style.display='none'; this.parentElement.innerText='${fn:escapeXml(token.symbol.substring(0,1))}';" />
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            ${fn:escapeXml(token.symbol.substring(0,1))}
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </div>
+                                                                <div>
+                                                                    <div style="font-weight: 600;">
+                                                                        ${fn:escapeXml(token.symbol)}</div>
+                                                                    <div
+                                                                        style="font-size: 12px; color: var(--text-gray);">
+                                                                        ${fn:escapeXml(token.name)}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div style="font-size: 12px; color: var(--text-gray);">
+                                                                Polygon</div>
+                                                        </div>
+                                                    </c:forEach>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div style="padding: 15px; text-align: center; color: red;">No
+                                                        tokens available.</div>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
+
+                                    <!-- AMOUNT INPUT SECTION -->
+
+                                    <div id="amountSection">
+
+                                        <label class="form-label"> For </label>
+
+                                        <div class="amount-input-wrapper">
+
+                                            <input type="text" name="fiatAmount" id="fiatAmount"
+                                                placeholder="Enter Amount to Buy" inputmode="decimal"
+                                                pattern="[0-9]*\.?[0-9]*" required
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" />
+
+                                            <span class="currency-label"> INR </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- PAYMENT MODE SECTION (Hidden until amount is entered) -->
+                                    <div class="payment-section" id="paymentSection">
+                                        <label class="form-label">Using</label>
+                                        <div class="payment-options">
+
+                                            <!-- UPI Option -->
+                                            <input type="radio" name="paymentModeRadio" id="modeUPI" value="INR_UPI"
+                                                checked onchange="updatePaymentMode('INR_UPI')">
+                                            <label for="modeUPI">
+                                                <!-- You can replace text with <img> tags for actual logos -->
+                                                UPI
+                                            </label>
+
+                                            <!-- IMPS Option -->
+                                            <input type="radio" name="paymentModeRadio" id="modeIMPS" value="INR_IMPS"
+                                                onchange="updatePaymentMode('INR_IMPS')">
+                                            <label for="modeIMPS"> IMPS </label>
+
+                                            <!-- NEFT Option -->
+                                            <input type="radio" name="paymentModeRadio" id="modeNEFT" value="INR_NEFT"
+                                                onchange="updatePaymentMode('INR_NEFT')">
+                                            <label for="modeNEFT"> NEFT </label>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- WALLET INPUT SECTION -->
+                                    <div id="walletSection" style="display: none; margin-bottom: 25px;">
+                                        <label class="form-label">Wallet Address</label>
+                                        <div class="amount-input-wrapper">
+                                            <input type="text" name="receiverAddress" id="receiverAddress"
+                                                placeholder="Enter your wallet address" />
+                                        </div>
+                                    </div>
+
+                                    <!-- MERCHANT ORDER ID -->
+                                    <div class="form-group" style="margin-bottom: 20px;">
+                                        <label class="form-label" style="color: var(--text-gray);">Merchant
+                                            OrderId <span class="required">*</span>
+                                        </label> <input type="text" name="merchantOrderId"
+                                            value="ORD<%=df.format(date)%>"
+                                            style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif;">
+                                    </div>
+
+                                    <button type="submit" class="btn-continue" id="btnContinue">Continue
+                                        &rarr;</button>
+                                </form>
+                            </div>
+
+                            <script>
+                                let selectedToken = null;
+
+                                function openDropdown() {
+                                    document.getElementById('dropdownMenu').classList.add('active');
+                                    document.getElementById('searchInput').focus();
+                                }
+
+                                function filterDropdown() {
+                                    const query = document.getElementById('searchInput').value.toLowerCase();
+                                    const items = document.querySelectorAll('.dropdown-item');
+
+                                    items.forEach(item => {
+                                        const symbol = item.getAttribute('data-symbol').toLowerCase();
+                                        const name = item.getAttribute('data-name').toLowerCase();
+
+                                        if (symbol.includes(query) || name.includes(query)) {
+                                            item.style.display = 'flex';
+                                        } else {
+                                            item.style.display = 'none';
+                                        }
+                                    });
+                                }
+
+                                function selectToken(symbol, name, chainId, address, logoUrl) {
+                                    const displayDiv = document.getElementById('selectedItemDisplay');
+                                    const searchInput = document.getElementById('searchInput');
+                                    const customSelect = document.querySelector('.custom-select'); // Get the parent container
+
+                                    // Add the class to hide the input text and placeholder
+                                    customSelect.classList.add('has-selection');
+
+                                    let iconHtml = '';
+
+                                    // Check if logoUrl is valid
+                                    if (logoUrl && logoUrl.trim() !== '' && logoUrl !== 'null' && logoUrl !== 'undefined') {
+                                        iconHtml = `<img src="${logoUrl}" 
+                                 style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;" 
+                                 alt="${symbol}"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div style="display: none; width: 28px; height: 28px; border-radius: 50%; background: #E5E7EB; justify-content: center; align-items: center; font-size: 12px; font-weight: bold;">${symbol.substring(0, 1)}</div>`;
+                                    } else {
+                                        iconHtml = `<div style="width: 28px; height: 28px; border-radius: 50%; background: #E5E7EB; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold;">${symbol.substring(0, 1)}</div>`;
+                                    }
+
+                                    // Render the display
+                                    displayDiv.innerHTML = `
+                ${iconHtml}
+                <span class="symbol-text">${symbol}</span>
+                <span class="network-text">• Polygon</span>
+            `;
+
+                                    // Show the display div
+                                    displayDiv.style.display = 'flex';
+
+                                    // Clear the search input value (so it doesn't interfere)
+                                    searchInput.value = '';
+
+                                    // Set hidden form inputs
+                                    document.getElementById('inputChainId').value = chainId;
+                                    document.getElementById('inputSymbol').value = symbol;
+
+                                    selectedToken = { symbol, name, chainId, address };
+
+                                    // Close dropdown
+                                    document.getElementById('dropdownMenu').classList.remove('active');
+
+                                    // Show other sections
+                                    document.getElementById('amountSection').style.display = 'block';
+                                    document.getElementById('paymentSection').style.display = 'block';
+                                    document.getElementById('walletSection').style.display = 'block';
+                                    document.getElementById('btnContinue').style.display = 'block';
+
+                                    document.getElementById('fiatAmount').focus();
+                                }
+                                // Update the hidden input when a payment mode radio button is clicked
+                                function updatePaymentMode(modeValue) {
+                                    document.getElementById('inputPaymentMode').value = modeValue;
+                                    console.log("Payment Mode changed to:", modeValue);
+                                }
+
+                                document.getElementById('searchInput').addEventListener('keydown', function () {
+                                    const displayDiv = document.getElementById('selectedItemDisplay');
+                                    const customSelect = document.querySelector('.custom-select');
+
+                                    // Hide the selected display
+                                    displayDiv.style.display = 'none';
+
+                                    // Remove the class so the input text and placeholder become visible again
+                                    customSelect.classList.remove('has-selection');
+
+                                    // Make sure the input text is visible
+                                    this.style.color = 'var(--text-dark)';
+                                });
+
+                                window.onclick = function (event) {
+                                    const menu = document.getElementById('dropdownMenu');
+                                    const selectWrapper = document.querySelector('.custom-select-wrapper');
+                                    const searchInput = document.getElementById('searchInput');
+                                    const displayDiv = document.getElementById('selectedItemDisplay');
+                                    const customSelect = document.querySelector('.custom-select');
+
+                                    if (!selectWrapper.contains(event.target)) {
+                                        menu.classList.remove('active');
+
+                                        // If a token was already selected, restore the visual display
+                                        if (selectedToken) {
+                                            searchInput.value = '';
+                                            customSelect.classList.add('has-selection'); // Hide input text
+                                            displayDiv.style.display = 'flex'; // Show visual display
+                                        }
+                                    }
+                                }
+
+                                document.getElementById('buyForm').addEventListener('submit', function (e) {
+                                    const amount = document.getElementById('fiatAmount').value;
+                                    if (!selectedToken) {
+                                        e.preventDefault();
+                                        alert("Please select a cryptocurrency first.");
+                                        return;
+                                    }
+                                    if (!amount || amount <= 0) {
+                                        e.preventDefault();
+                                        alert("Please enter a valid amount.");
+                                        return;
+                                    }
+                                });
+                            </script>
+                        </body>
+
+                        </html>

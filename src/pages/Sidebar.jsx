@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../api/axios";
 import { toast } from "react-toastify";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { TbMoon } from "react-icons/tb";
 import { PiLinkSimpleBold } from "react-icons/pi";
 import balcklogo from "../assets/img-1.jpeg";
 import whitelogo from "../assets/logo-copy.png";
+import { TbCoinBitcoin } from "react-icons/tb";
+
 import {
   LayoutDashboard,
   BarChart2,
@@ -13,18 +14,16 @@ import {
   ChevronDown,
   Key,
   Webhook,
-  Shield,
   LogOut,
   CircleUser,
-  Home,
-  Folder,
   Moon,
-  Sun
+  Sun,  
 } from "lucide-react";
 
 export default function Sidebar({ open, setOpen }) {
   const [darkMode, setDarkMode] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
+  const [showCrypto, setShowCrypto] = useState(false);
   const [activeMenu, setActiveMenu] = useState("dashboard");
   const [sidebarColor, setSidebarColor] = useState("#020923");
 
@@ -42,8 +41,8 @@ export default function Sidebar({ open, setOpen }) {
     sidebarColor === "#fff" ||
     sidebarColor === "#ffffff";
 
-  const getMenuClass = ({ isActive }) =>
-    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${isActive && activeMenu !== "settings"
+  const getMenuClass = ({ menuKey }) =>
+    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeMenu === menuKey
       ? isLightSidebar
         ? "bg-yellow-400 text-black"
         : "bg-white text-black"
@@ -76,16 +75,21 @@ export default function Sidebar({ open, setOpen }) {
     }
   };
 
-  const isSettingsChildActive = [
-    "/app/api-keys",
-    "/app/webhooks",
-    "/app/ip-Whishlist",
-    "/app/profile",
-    "/app/apidoc",
-  ].includes(location.pathname);
+  // const isSettingsChildActive = [
+  //   "/app/api-keys",
+  //   "/app/webhooks",
+  //   "/app/ip-Whishlist",
+  //   "/app/profile",
+  //   "/app/apidoc",
+  // ].includes(location.pathname);
 
   const isSettingsMainActive =
     location.pathname === "/app/settings";
+
+  const isCryptoChildActive = [
+    "/app/crypto-dashboard",
+    "/app/crypto-reports",
+  ].includes(location.pathname);
 
   // Only For Mobile Device
   const closeSidebarOnMobile = () => {
@@ -106,7 +110,7 @@ export default function Sidebar({ open, setOpen }) {
         lg:translate-x-0
         ${open ? "translate-x-0 lg:w-64 xl:w-56" : "-translate-x-full lg:translate-x-0 lg:w-20"}
         w-64
-    `}
+      `}
         style={{ backgroundColor: sidebarColor }}
       >
         {/* Header */}
@@ -114,8 +118,8 @@ export default function Sidebar({ open, setOpen }) {
           className={`px-5 py-5 xl:px-4 xl:py-3 border-b border-white/10 ${open ? "flex items-center" : "flex justify-center"
             }`}
         >
-          <div className="flex items-center gap-3 xl:gap-2 overflow-hidden">
-            <div className="w-10 h-10 xl:w-8 xl:h-8 rounded-full bg-yellow-400 flex items-center justify-center font-bold text-black text-lg xl:text-base shrink-0">
+          <div className="flex items-center gap-3 xl:gap-2 overflow-hidden cursor-default">
+            <div className="w-10 h-10 xl:w-8 xl:h-8 rounded-full bg-[#fec931] flex items-center justify-center font-bold text-black text-lg xl:text-base shrink-0">
               H
             </div>
             {open && (
@@ -132,33 +136,30 @@ export default function Sidebar({ open, setOpen }) {
 
         {/* Menu */}
         <div className="flex-1 overflow-y-auto px-4 py-5 xl:px-3 xl:py-3 hide-scrollbar">
-
           {/* MAIN */}
           {open && (
             <p
-              className={`text-[11px] xl:text-[10px] uppercase tracking-widest font-semibold mb-3 xl:mb-2 ${isLightSidebar ? "text-black" : "text-white"
+              className={`text-[11px] xl:text-[10px] uppercase tracking-widest font-semibold mb-3 xl:mb-2 cursor-default ${isLightSidebar ? "text-black" : "text-white"
                 }`}
             >
               Main
             </p>
           )}
 
-
-          <div className="space-y-2 xl:space-y-1.5">
-
+          <div className="space-y-2 xl:space-y-1.5 ">
             <NavLink
               to="/app/dashboard"
               onClick={() => {
                 setActiveMenu("dashboard");
+                setShowCrypto(false);
                 setShowSettings(false);
                 closeSidebarOnMobile();
               }}
-              className={getMenuClass}
+              className={() => getMenuClass({ menuKey: "dashboard" })}
             >
               <LayoutDashboard size={18} className="xl:w-4 xl:h-4" />
               {open && <span className="xl:text-sm">Dashboard</span>}
             </NavLink>
-
 
             <NavLink
               to="/app/paymentlinks"
@@ -173,84 +174,150 @@ export default function Sidebar({ open, setOpen }) {
               {open && <span className="xl:text-sm">Payment Links</span>}
             </NavLink>
 
-
             <NavLink
               to="/app/reports"
               onClick={() => {
                 setActiveMenu("reports");
+                setShowCrypto(false);
                 setShowSettings(false);
                 closeSidebarOnMobile();
               }}
-              className={getMenuClass}
+              className={() => getMenuClass({ menuKey: "reports" })}
             >
               <BarChart2 size={18} className="xl:w-4 xl:h-4" />
               {open && <span className="xl:text-sm">Reports</span>}
             </NavLink>
 
+            {/* Crypto Management */}
+            <div>
+              <button
+                onClick={() => {
+                  setActiveMenu("crypto-management");
+                  setShowCrypto((prev) => !prev);
+                  setShowSettings(false);
+                }}
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm transition-all ${activeMenu === "crypto-management"
+                  ? isLightSidebar
+                    ? "bg-yellow-400 text-black"
+                    : "bg-white text-black"
+                  : isLightSidebar
+                    ? "text-black hover:bg-yellow-400"
+                    : "text-white/70 hover:bg-white hover:text-black"
+                  }`}
+              >
+                <div className="flex items-center gap-3">                  
+                   <TbCoinBitcoin size={18} className="xl:w-4 xl:h-4" />
+                  {open && (
+                    <span className="xl:text-sm">
+                      Crypto Management
+                    </span>
+                  )}
+                </div>
+
+                {open && (
+                  <ChevronDown
+                    size={18}
+                    className={`transition xl:w-4 xl:h-4 ${showSettings ? "rotate-180" : ""
+                      }`}
+                  />
+                )}
+              </button>
+
+              {/* Crypto Management Submenu */}
+              {showCrypto && open && (
+                <div className="ml-4 mt-2 space-y-2 border-l border-white/10 pl-4 xl:ml-3 xl:mt-1.5 xl:space-y-1.5 xl:pl-3">
+                  <NavLink
+                    to="/app/crypto-dashboard"
+                    onClick={() => {
+                      setActiveMenu("crypto-dashboard");
+                      setShowCrypto(true);
+                      setShowSettings(false);
+                      closeSidebarOnMobile();
+                    }}
+                    className={() => getMenuClass({ menuKey: "crypto-dashboard" })}
+                  >
+                    <LayoutDashboard size={17} className="xl:w-4 xl:h-4" />
+                    <span className="xl:text-sm">
+                      Dashboard
+                    </span>
+                  </NavLink>
+
+                  {/* Reports */}
+                  <NavLink
+                    to="/app/crypto-reports"
+                    onClick={() => {
+                      setActiveMenu("crypto-reports");
+                      setShowCrypto(true);
+                      setShowSettings(false);
+                      closeSidebarOnMobile();
+                    }}
+                    className={() => getMenuClass({ menuKey: "crypto-reports" })}
+                  >
+                    <BarChart2 size={17} className="xl:w-4 xl:h-4" />
+                    <span className="xl:text-sm">
+                      Reports
+                    </span>
+                  </NavLink>
+                </div>
+              )}
+            </div>
           </div>
-
-
 
           {/* Manage */}
           {open && (
             <p
-              className={`text-[11px] xl:text-[10px] uppercase tracking-widest font-semibold mt-8 xl:mt-5 mb-3 xl:mb-2 ${isLightSidebar ? "text-black/80" : "text-white"
-                }`}
-            >
+              className={`text-[11px] xl:text-[10px] uppercase tracking-widest font-semibold mt-8 xl:mt-5 mb-3 xl:mb-2 cursor-default ${isLightSidebar ? "text-black/80" : "text-white"
+                }`}>
               Manage
             </p>
           )}
 
-
           <div className="space-y-2 xl:space-y-1.5">
-
             {/* Settings */}
             <button
               onClick={() => {
                 setActiveMenu("settings");
                 setShowSettings((prev) => !prev);
+                setShowCrypto(false);
               }}
               className={`w-full flex items-center justify-between px-3 xl:px-2.5 py-3 xl:py-2.5 rounded-xl transition-all ${activeMenu === "settings"
-                  ? isLightSidebar
-                    ? "bg-yellow-400 text-black"
-                    : "bg-white text-black"
-                  : isLightSidebar
-                    ? "text-black"
-                    : "text-white/70 hover:bg-white/5"
+                ? isLightSidebar
+                  ? "bg-yellow-400 text-black"
+                  : "bg-white text-black"
+                : isLightSidebar
+                  ? "text-black"
+                  : "text-white/70 hover:bg-white/5"
                 }`}
             >
               <div className="flex items-center gap-3 xl:gap-2">
                 <Settings size={18} className="xl:w-4 xl:h-4" />
-
                 {open && (
                   <span className="xl:text-sm">
                     Settings
                   </span>
                 )}
               </div>
-
-
               {open && (
                 <ChevronDown
                   size={18}
-                  className={`transition xl:w-4 xl:h-4 ${showSettings ? "rotate-180" : ""
+                  className={`transition xl:w-4 xl:h-4 ${showCrypto ? "rotate-180" : ""
                     }`}
                 />
               )}
-
             </button>
+
             {/* Submenu */}
             {showSettings && open && (
               <div className="ml-4 mt-2 space-y-2 border-l border-white/10 pl-4 xl:ml-3 xl:mt-1.5 xl:space-y-1.5 xl:pl-3">
-
                 <NavLink
                   to="/app/api-keys"
                   onClick={() => {
                     setActiveMenu("api-keys");
                     setShowSettings(true);
+                    setShowCrypto(false);
                     closeSidebarOnMobile();
                   }}
-                  className={getMenuClass}
+                 className={() => getMenuClass({ menuKey: "api-keys" })}
                 >
                   <Key size={17} className="xl:w-4 xl:h-4" />
                   <span className="xl:text-sm">
@@ -258,15 +325,15 @@ export default function Sidebar({ open, setOpen }) {
                   </span>
                 </NavLink>
 
-
                 <NavLink
                   to="/app/webhooks"
                   onClick={() => {
                     setActiveMenu("webhooks");
                     setShowSettings(true);
+                    setShowCrypto(false);
                     closeSidebarOnMobile();
                   }}
-                  className={getMenuClass}
+                  className={() => getMenuClass({ menuKey: "webhooks" })}
                 >
                   <Webhook size={17} className="xl:w-4 xl:h-4" />
                   <span className="xl:text-sm">
@@ -274,15 +341,15 @@ export default function Sidebar({ open, setOpen }) {
                   </span>
                 </NavLink>
 
-
                 <NavLink
                   to="/app/profile"
                   onClick={() => {
                     setActiveMenu("profile");
                     setShowSettings(true);
+                    setShowCrypto(false);
                     closeSidebarOnMobile();
                   }}
-                  className={getMenuClass}
+                  className={() => getMenuClass({ menuKey: "profile" })}
                 >
                   <CircleUser size={17} className="xl:w-4 xl:h-4" />
                   <span className="xl:text-sm">
@@ -290,74 +357,58 @@ export default function Sidebar({ open, setOpen }) {
                   </span>
                 </NavLink>
 
-
                 <NavLink
                   to="/app/apidoc"
                   onClick={() => {
                     setActiveMenu("api-docs");
                     setShowSettings(true);
+                    setShowCrypto(false);
                     closeSidebarOnMobile();
                   }}
-                  className={getMenuClass}
+                   className={() => getMenuClass({ menuKey: "api-docs" })}
                 >
                   <BarChart2 size={17} className="xl:w-4 xl:h-4" />
                   <span className="xl:text-sm">
                     API Docs
                   </span>
                 </NavLink>
-
               </div>
             )}
-
           </div>
         </div>
 
-
-
         {/* Dark Mode */}
-        <div className="border-t border-white/10 px-5 py-4 xl:px-3 xl:py-3">
+        <div className="border-t border-white/10 px-5 py-4 xl:px-3 xl:py-3 cursor-default">
           <div
             className={`flex items-center ${open ? "justify-between" : "justify-center"
-              }`}
-          >
-
+              }`} >
             {open && (
               <span className="flex items-center gap-2 xl:gap-1 text-sm xl:text-xs">
                 {darkMode ? <Moon size={18} className="xl:w-4 xl:h-4" /> : <Sun size={18} className="xl:w-4 xl:h-4" />}
-
                 {darkMode ? "Dark Mode" : "Light Mode"}
               </span>
             )}
-
 
             <button
               onClick={() => setDarkMode(!darkMode)}
               className={`relative w-12 h-6 xl:w-10 xl:h-5 rounded-full transition ${darkMode ? "bg-blue-500" : "bg-gray-500"
                 }`}
             >
-
               <span
                 className={`absolute top-0.5 right-6 xl:right-5 h-5 w-5 xl:h-4 xl:w-4 rounded-full bg-white transition ${darkMode ? "translate-x-6" : "translate-x-0.5"
                   }`}
               />
-
             </button>
-
           </div>
         </div>
 
-
-
         {/* Logout */}
         <div className="border-t border-white/10 p-4 xl:p-3">
-
           <button
             onClick={handleLogout}
             className="w-full flex items-center gap-3 xl:gap-2 px-3 xl:px-2.5 py-3 xl:py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 transition"
           >
-
             <LogOut size={18} className="xl:w-4 xl:h-4" />
-
             {open && (
               <span className="xl:text-sm">
                 Logout
@@ -365,12 +416,8 @@ export default function Sidebar({ open, setOpen }) {
             )}
 
           </button>
-
         </div>
-
       </aside>
-
-
 
       {/* Overlay */}
       {open && (

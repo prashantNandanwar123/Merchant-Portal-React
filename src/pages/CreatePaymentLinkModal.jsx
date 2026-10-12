@@ -1,17 +1,11 @@
 import {
     X,
-    Info,
-    Mail,
-    MessageCircle,
-    Smartphone,
-    QrCode,
     Copy,
     Check,
     Link as LinkIcon,
 } from "lucide-react";
 
-import { useState, useEffect, useRef } from "react";
-import QRCode from "react-qr-code";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 export default function CreatePaymentLinkModal({
     isOpen,
@@ -35,7 +29,6 @@ export default function CreatePaymentLinkModal({
         try {
             await navigator.clipboard.writeText(text);
             setCopied(true);
-
             setTimeout(() => {
                 setCopied(false);
             }, 2000);
@@ -50,7 +43,6 @@ export default function CreatePaymentLinkModal({
     }, [data]);
 
     if (!isOpen) return null;
-
     const handleGenerate = async () => {
         try {
             setCreating(true);
@@ -66,7 +58,7 @@ export default function CreatePaymentLinkModal({
                 paymentLink: directLink,
                 url: directLink,
             }));
-            if (directLink) {                
+            if (directLink) {
                 setShowLinkPopup(true);
             }
         } catch (error) {
@@ -95,49 +87,52 @@ export default function CreatePaymentLinkModal({
     const orderStatus = paymentData?.orderStatus || paymentData?.status || "";
 
     return (
-        
-        <div
-            className="fixed inset-0 bg-black/40 flex justify-center items-center z-50 p-4"
-            onClick={onClose}
-        >
+        <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50 p-4"
+            onClick={onClose}>
             {/* First popup: only render when second popup is NOT open */}
             {!showLinkPopup && (
                 <div
-                    className="bg-white rounded-xl w-full max-w-[420px] shadow-xl max-h-[90vh] overflow-y-auto"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    {/* Header */}
-                    <div className="flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 border-b">
-                        <h2 className="text-lg sm:text-xl font-semibold">Create Payment Link</h2>
-                        <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-md">
+                    className="bg-white rounded-2xl w-full max-w-[420px] shadow-2xl max-h-[90vh] overflow-y-auto border border-gray-100"
+                    onClick={(e) => e.stopPropagation()}>
+                    <div className="flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-200">
+                        <h2 className="text-lg sm:text-xl font-medium text-gray-900">
+                            Create Payment Link
+                        </h2>
+                        <button
+                            onClick={onClose}
+                            className="p-1.5 hover:bg-gray-100 rounded-lg transition-all duration-200 text-gray-500 hover:text-gray-800">
                             <X size={20} />
                         </button>
                     </div>
 
-                    <div className="p-4 sm:p-6 space-y-4">
+                    <div className="p-4 sm:p-6 space-y-5">
                         {/* Order ID */}
                         <div>
-                            <label className="text-sm font-medium">Order ID</label>
+                            <label className="text-sm font-medium text-gray-700">
+                                Order ID
+                            </label>
                             <input
                                 value={paymentData.orderId || ""}
                                 readOnly
-                                className="w-full border rounded-lg px-3 py-2.5 sm:py-3 mt-1 bg-gray-100 text-sm"
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 sm:py-3 mt-1.5 text-sm text-gray-600 bg-gray-50 outline-none cursor-not-allowed transition-all duration-200"
                             />
                         </div>
 
                         {/* Mode */}
                         <div>
-                            <label className="text-sm font-medium">Mode</label>
+                            <label className="text-sm font-medium text-gray-700">
+                                Mode
+                            </label>
                             <input
                                 value={paymentData.mode || ""}
                                 readOnly
-                                className="w-full border rounded-lg px-3 py-2.5 sm:py-3 mt-1 bg-gray-100 text-sm"
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 sm:py-3 mt-1.5 text-sm text-gray-600 bg-gray-50 outline-none cursor-not-allowed transition-all duration-200"
                             />
                         </div>
 
                         {/* Agent Name */}
                         <div>
-                            <label className="text-sm font-medium">
+                            <label className="text-sm font-medium text-gray-700">
                                 Agent Name
                             </label>
                             <input
@@ -149,27 +144,32 @@ export default function CreatePaymentLinkModal({
                                         agentName: e.target.value,
                                     }))
                                 }
-                                className="w-full border rounded-lg px-3 py-2.5 sm:py-3 mt-1 text-sm outline-none focus:border-blue-500"
-                                placeholder="Agent Name"
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2.5 sm:py-3 mt-1.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-100 transition-all duration-200"
+                                placeholder="Enter agent name"
                             />
                         </div>
                     </div>
 
-                    <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-4 border-t">
-                        <button onClick={onClose} className="w-full sm:w-auto px-4 py-2 border rounded-lg text-sm font-medium">
+                    <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-4 border-t border-gray-200 bg-gray-50/50">
+                        <button
+                            onClick={onClose}
+                            className="w-full sm:w-auto px-4 py-2.5 border border-gray-300 bg-white rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
+                        >
                             Cancel
                         </button>
+
                         <button
                             onClick={handleGenerate}
                             disabled={creating}
-                            className="w-full sm:w-auto px-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium"
+                            className="w-full sm:w-auto px-4 py-2.5 border border-[#fec931] bg-white text-gray-900 rounded-lg text-sm font-medium hover:bg-[#fff8df] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {creating ? "Generating..." : "Generate Link"}
                         </button>
+
                         <button
                             onClick={handleGenerate}
                             disabled={creating}
-                            className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium"
+                            className="w-full sm:w-auto px-4 py-2.5 bg-[#fec931] text-gray-900 rounded-lg text-sm font-medium shadow-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             Generate and Share
                         </button>
@@ -188,8 +188,8 @@ export default function CreatePaymentLinkModal({
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className="flex justify-between items-center px-4 py-3 border-b bg-gray-50">
-                            <h2 className="text-xl font-semibold text-gray-900 uppercase">
+                        <div className="flex justify-between items-center px-4 py-3 border-b bg-gray-50 border-gray-300">
+                            <h2 className="text-lg font-medium text-gray-900 uppercase">
                                 Share Payment Link
                             </h2>
                             <button
@@ -269,19 +269,15 @@ export default function CreatePaymentLinkModal({
                                 </div>
                             </div>
                         </div>
-
-                        {/* Footer */}
-                        <div className="flex justify-end gap-2 px-4 py-3 border-t">
+                        <div className="flex justify-end gap-2 px-4 py-3">
                             <button
                                 onClick={handleCloseAll}
-                                className="px-4 py-2 border rounded-lg text-xs font-medium"
-                            >
+                                className="px-4 py-2 border rounded-lg text-xs font-medium">
                                 Cancel
                             </button>
                             <button
                                 onClick={handleSendShare}
-                                className="px-5 py-2 bg-blue-600 text-white rounded-lg text-xs font-medium"
-                            >
+                                className="px-5 py-2 bg-[#fec931] text-black rounded-lg text-xs font-medium">
                                 Share
                             </button>
                         </div>

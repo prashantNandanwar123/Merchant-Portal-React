@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../api/axios";
-import { toast } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 
@@ -15,14 +13,15 @@ export default function Navbar({ toggleSidebar }) {
     const pageTitles = {
         "/app/dashboard": "Dashboard",
         "/app/reports": "Reports",
+        "/app/crypto-dashboard": "Crypto Dashboard",
+        "/app/crypto-reports": "Crypto Reports",
         "/app/api-keys": "API Keys",
         "/app/webhooks": "Webhooks",
         "/app/ip-Whishlist": "IP Whitelist",
         "/app/profile": "Profile",
         "/app/apidoc": "API Docs",
-        "/app/paymentlinks": "Payment Links"
+        "/app/paymentlinks": "Payment Links"        
     };
-
 
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const companyName = user?.company_name || "No Company";
@@ -33,7 +32,6 @@ export default function Navbar({ toggleSidebar }) {
         .map(word => word.charAt(0).toUpperCase())
         .slice(0, 2)
         .join("");
-
 
     // Auto Hide Notification
     useEffect(() => {
@@ -49,7 +47,6 @@ export default function Navbar({ toggleSidebar }) {
     const handleNotificationClick = () => {
         setShowNotification(true);
     };
-
     // Close Notification
     const handleNotification = () => {
         setShowNotification(false);
@@ -60,8 +57,7 @@ export default function Navbar({ toggleSidebar }) {
             {/* NAVBAR */}
             <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm px-4 sm:px-6 xl:px-3 h-16 xl:h-14 flex items-center justify-between">
                 {/* Left Section */}
-                <div className="flex items-center gap-2 sm:gap-4 xl:gap-2 min-w-0">
-                    {/* Sidebar Toggle */}
+                <div className="flex items-center gap-2 sm:gap-4 xl:gap-2 min-w-0">                   
                     <button
                         onClick={toggleSidebar}
                         className="p-2 xl:p-1.5 rounded-lg hover:bg-gray-100 transition shrink-0"
@@ -129,10 +125,9 @@ export default function Navbar({ toggleSidebar }) {
 
                     {/* Profile */}
                     <button className="flex items-center gap-2 sm:gap-3 xl:gap-2 rounded-lg px-2 xl:px-1.5 py-1 hover:bg-gray-100 transition">
-                        <div className="w-9 h-9 sm:w-10 h-10 xl:w-8 xl:h-8 rounded-full bg-orange-400 flex items-center justify-center text-white font-bold text-sm sm:text-base xl:text-sm shrink-0">
+                        <div className="w-9 h-9 sm:w-10 h-10 xl:w-8 xl:h-8 rounded-full bg-[#fec931] flex items-center justify-center text-black font-semibold text-sm sm:text-base xl:text-sm shrink-0">
                             {initials}
                         </div>
-
                         <div className="hidden sm:flex flex-col text-left leading-tight">
                             <span className="text-sm xl:text-xs font-semibold text-gray-900">
                                 {merchantName}

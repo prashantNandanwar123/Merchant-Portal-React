@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../api/axios";
 import { toast } from "react-toastify";
-import { Package, CheckCircle2, RefreshCcw, AlertCircle } from "lucide-react";
 import { CiExport } from "react-icons/ci";
 import { FaSearch } from "react-icons/fa";
-import { Filter, Download } from "lucide-react";
+import { Filter, Search } from "lucide-react";
 
 
 export default function ReportsPage() {
   const today = new Date().toISOString().split("T")[0];
-
   const [fromDate, setFromDate] = useState(today);
   const [toDate, setToDate] = useState(today);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
-
 
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
@@ -28,6 +25,9 @@ export default function ReportsPage() {
   const fetchReport = async () => {
     try {
       setLoading(true);
+      // setData([]);
+      // setTotalRecords(0);
+      // setTotalPages(0);
       const payload = {
         fromDate: formatDate(fromDate),
         toDate: formatDate(toDate),
@@ -70,11 +70,9 @@ export default function ReportsPage() {
       });
 
       const url = window.URL.createObjectURL(blob);
-
       const link = document.createElement("a");
       link.href = url;
       link.download = "Merchant_Transaction_Report.xlsx";
-
       document.body.appendChild(link);
       link.click();
 
@@ -89,7 +87,6 @@ export default function ReportsPage() {
   // convert YYYY-MM-DD → DD/MM/YYYY
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
-
     const [y, m, d] = dateStr.split("-");
     return `${d}/${m}/${y}`;
   };
@@ -103,7 +100,6 @@ export default function ReportsPage() {
     );
     const matchStatus =
       statusFilter === "" || row[5] === statusFilter;
-
     return matchSearch && matchStatus;
   });
 
@@ -116,129 +112,103 @@ export default function ReportsPage() {
       setToDate("");
       return;
     }
-
+    // Date Function
     const from = new Date();
     from.setDate(today.getDate() - Number(days));
-
     const formattedFrom = from.toISOString().split("T")[0];
     const formattedTo = today.toISOString().split("T")[0];
-
     setFromDate(formattedFrom);
     setToDate(formattedTo);
   };
 
   return (
+
     <div
-      className="
-      h-screen
-      bg-gray-50
-      p-3 sm:p-5 lg:p-6 xl:p-4
-      overflow-y-auto sm:overflow-hidden
-      hide-scrollbar
-      flex flex-col
-      gap-4 sm:gap-6 xl:gap-3
-    "
+      className="h-screen bg-gray-50 p-3 sm:p-5 lg:p-6 xl:p-4 overflow-y-auto sm:overflow-hidden hide-scrollbar flex flex-col gap-4 sm:gap-6 xl:gap-3"
     >
-      {/* Heading */}
-      <div>
-        <h1 className="text-center md:text-left text-xl sm:text-2xl md:text-3xl xl:text-2xl font-bold text-gray-800">
-          Transaction Report
-        </h1>
-        <p className="text-xs sm:text-sm font-normal text-gray-500 mt-1 sm:mt-2 xl:mt-1 text-center md:text-left">
-          View and analyze your transaction data with detailed insights.
-        </p>
-      </div>
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 xl:gap-3">
+        <div className="flex-1">
+          <h1 className="text-center md:text-left text-xl sm:text-2xl md:text-3xl xl:text-2xl font-semibold text-gray-800 cursor-default">
+            Transaction Report
+          </h1>
+          <p className="text-xs sm:text-sm font-normal text-gray-500 mt-1 sm:mt-2 xl:mt-1 text-center md:text-left cursor-default">
+            View and analyze your transaction data with detailed insights.
+          </p>
+        </div>
 
-      {/* Filter Card */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-3 md:p-4 xl:p-3">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 xl:gap-3">
-          {/* Left Side */}
-          <div className="flex flex-col sm:flex-row sm:items-end gap-3 xl:gap-2 w-full lg:w-auto">
-            {/* From + To Date */}
-            <div className="flex w-full gap-2 sm:w-auto">
-              {/* From Date */}
-              <div className="flex-1 sm:flex-none">
-                <label className="block text-xs font-medium text-gray-600 mb-1">
-                  From Date
-                </label>
-                <input
-                  type="date"
-                  value={fromDate}
-                  onChange={(e) => setFromDate(e.target.value)}
-                  className="w-full sm:w-[140px] md:w-[150px] xl:w-[130px] rounded-lg border border-gray-300 px-2 py-1.5 xl:py-1 text-xs sm:text-sm xl:text-xs focus:ring-2 focus:ring-yellow-400 outline-none"
-                />
-              </div>
-
-              {/* To Date */}
-              <div className="flex-1 sm:flex-none">
-                <label className="block text-xs font-medium text-gray-600 mb-1">
-                  To Date
-                </label>
-
-                <input
-                  type="date"
-                  value={toDate}
-                  onChange={(e) => setToDate(e.target.value)}
-                  className="w-full sm:w-[140px] md:w-[150px] xl:w-[130px] rounded-lg border border-gray-300 px-2 py-1.5 xl:py-1 text-xs sm:text-sm xl:text-xs focus:ring-2 focus:ring-yellow-400 outline-none"
-                />
-              </div>
-            </div>
-
-            {/* Quick Filter */}
-            <div className="relative w-full sm:w-auto">
-              <Filter
-                size={13}
-                className="absolute left-3 top-8 xl:top-9 -translate-y-1/2 text-gray-500"
-              />
-              <label className="block text-[12px] font-medium text-gray-600 mb-1">
-                All Transactions
-              </label>
-              <select
-                value={selectedFilter}
-                onChange={(e) => handleQuickFilter(e.target.value)}
-                className="h-9 xl:h-7 w-full sm:w-auto pl-9 pr-7 xl:pr-4 text-xs sm:text-sm xl:text-xs rounded-lg border border-gray-200 bg-white text-gray-700 font-medium appearance-none cursor-pointer"
-              >
-                <option value="">All Transactions</option>
-                <option value="7">Last 7 Days</option>
-                <option value="14">Last 14 Days</option>
-                <option value="21">Last 21 Days</option>
-                <option value="30">Last 30 Days</option>
-              </select>
-            </div>
+        <div className="flex flex-col sm:flex-row sm:items-end gap-2 xl:gap-1.5 w-full lg:w-auto">
+          <div className="flex-1 sm:flex-none">
+            <label className="block text-xs font-medium text-gray-600 mb-1">
+              From Date
+            </label>
+            <input
+              type="date"
+              value={fromDate}
+              max={today}
+              onChange={(e) => setFromDate(e.target.value)}
+              className="w-full sm:w-[140px] md:w-[150px] xl:w-[130px]
+          rounded-lg border border-gray-300
+          px-2 py-1.5 xl:py-1
+          text-xs sm:text-sm xl:text-xs
+          focus:ring-2 focus:ring-yellow-400 outline-none"
+            />
           </div>
 
-          {/* Right Side Buttons */}
-          <div className="flex flex-col sm:flex-row gap-2 xl:gap-1.5 w-full lg:w-auto">
-            {/* Export Button */}
-            <button
-              onClick={handleExport}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 xl:px-3 xl:py-1.5 text-xs sm:text-sm xl:text-xs border border-yellow-500 text-yellow-600 rounded-lg hover:bg-yellow-50 transition"
-            >
-              <CiExport className="text-base" />
-              <span>Export</span>
-            </button>
-            {/* Search Button */}
-            <button
-              onClick={() => {
-                setPage(0);
-                fetchReport();
-              }}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 xl:px-3 xl:py-1.5 text-xs sm:text-sm xl:text-xs bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
-            >
-              <FaSearch className="text-base" />
-              <span>Search</span>
-            </button>
+          {/* To Date */}
+          <div className="flex-1 sm:flex-none">
+            <label className="block text-xs font-medium text-gray-600 mb-1">
+              To Date
+            </label>
+            <input
+              type="date"
+              max={today}
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              className="w-full sm:w-[140px] md:w-[150px] xl:w-[130px]
+          rounded-lg border border-gray-300
+          px-2 py-1.5 xl:py-1
+          text-xs sm:text-sm xl:text-xs
+          focus:ring-2 focus:ring-yellow-400 outline-none"
+            />
           </div>
+
+          {/* Search */}
+          <button
+            onClick={() => {
+              setPage(0);
+              fetchReport();
+            }}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 xl:px-3 xl:py-1.5
+            text-xs sm:text-sm xl:text-xs font-semibold bg-[#fec931] text-black rounded-lg transition">
+            <Search size={16} strokeWidth={2} />
+            <span>Search</span>
+          </button>
+
+          {/* Export */}
+          <button
+            onClick={handleExport}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 xl:px-3 xl:py-1.5
+             text-xs sm:text-sm xl:text-xs border border-[#fec931] text-black rounded-lg hover:bg-[#fec931] transition"
+          >
+            <CiExport className="text-base" />
+            <span>Export</span>
+          </button>
         </div>
       </div>
 
-      {/* ================= TABLE SECTION ================= */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+      {/* Filter Card */}
+      <div className="mx-2">
+        {/* Search section no longer needed here */}
+      </div>
+
+      {/* ============== TABLE SECTION =========== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 mx-2 md:mx-0">
         {/* Top Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 xl:gap-2 p-4 sm:p-5 xl:p-3">
           {/* Left */}
           <div className="flex items-center gap-2">
-            <span className="text-sm xl:text-xs text-gray-600">
+            <span className="text-sm xl:text-xs text-gray-600 cursor-default">
               Show
             </span>
             <select
@@ -247,13 +217,12 @@ export default function ReportsPage() {
                 setSize(Number(e.target.value));
                 setPage(0);
               }}
-              className="border border-gray-300 rounded-lg px-3 py-2 xl:px-2 xl:py-1 text-sm xl:text-xs focus:ring-2 focus:ring-yellow-400"
-            >
+              className="border border-gray-300 rounded-lg px-3 py-2 xl:px-2 xl:py-1 text-sm xl:text-xs focus:ring-2 focus:ring-yellow-400">
               <option value={10}>10</option>
               <option value={20}>20</option>
               <option value={50}>50</option>
             </select>
-            <span className="text-sm xl:text-xs text-gray-600">
+            <span className="text-sm xl:text-xs text-gray-600 cursor-default">
               entries
             </span>
           </div>
@@ -282,8 +251,7 @@ export default function ReportsPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="h-10 xl:h-8 w-full sm:w-auto pl-10 xl:pl-9 pr-8 text-xs sm:text-sm xl:text-xs rounded-lg border border-gray-300 bg-white text-gray-700 appearance-none cursor-pointer focus:ring-2 focus:ring-yellow-400"
-              >
+                className="h-10 xl:h-8 w-full sm:w-auto pl-10 xl:pl-9 pr-8 text-xs sm:text-sm xl:text-xs rounded-lg border border-gray-300 bg-white text-gray-700 appearance-none cursor-pointer focus:ring-2 focus:ring-yellow-400">
                 <option value="">All Status</option>
                 <option value="SUCCESS">Success</option>
                 <option value="FAILED">Failed</option>
@@ -298,58 +266,58 @@ export default function ReportsPage() {
           className="
           w-full
           min-w-0
-          max-h-[420px] xl:max-h-[250px]
+          max-h-[420px] xl:max-h-[450px]
           overflow-x-auto
           overflow-y-auto
-          "
-        >
-          <table className="min-w-[1700px] text-sm xl:text-[11px] border-collapse">
-            <thead className="sticky top-0 z-30 bg-white shadow-sm">
-              <tr className="text-gray-700">
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">ID</th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+          ">
+          <table className="min-w-[1800px] text-sm xl:text-[11px]">
+            <thead className="sticky top-0 z-30 bg-[#fec931] shadow-sm">
+              <tr className="text-black">
+                <th className="w-[2%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
+                  ID</th>
+                <th className="w-[15%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
                   Transaction Reference No.
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
                   Order No.
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
                   Date & Time
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="w-[12%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
                   Payment Type
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="w-[10%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
                   Txn Amount
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="px-3 xl:px-2 py-4 xl:py-2 text-left font-semibold whitespace-nowrap border border-gray-300">
                   MSF Fee
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="w-[13%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
                   MSF GST Fee
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="w-[8%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
                   Conv Fee
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
-                  Convenience GST Fee
+                <th className="w-[12%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-2 xl:py-1 border border-gray-200">
+                  Conv GST Fee
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="px-3 xl:px-2 py-4 xl:py-2 text-left font-semibold whitespace-nowrap border border-gray-300">
                   Total Txn Amount
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="px-3 xl:px-2 py-4 xl:py-2 text-left font-semibold whitespace-nowrap border border-gray-300">
                   Status
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="px-3 xl:px-2 py-4 xl:py-2 text-left font-semibold whitespace-nowrap border border-gray-300">
                   Customer Name
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="px-3 xl:px-2 py-4 xl:py-2 text-left font-semibold whitespace-nowrap border border-gray-300">
                   Mobile No.
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="px-3 xl:px-2 py-4 xl:py-2 text-left font-semibold whitespace-nowrap border border-gray-300">
                   Email
                 </th>
-                <th className="px-3 xl:px-2 py-4 xl:py-1.5 text-left font-semibold bg-gray-50 whitespace-nowrap border border-gray-200">
+                <th className="px-3 xl:px-2 py-4 xl:py-2 text-left font-semibold whitespace-nowrap border border-gray-300">
                   UTR No.
                 </th>
               </tr>
@@ -361,40 +329,40 @@ export default function ReportsPage() {
                     key={index}
                     className="hover:bg-yellow-50 transition"
                   >
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-5 xl:px-3 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {page * size + index + 1}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {row[0]}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {row[1]}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {row[2]}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {row[3]}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       ₹ {(row[4] || 0) / 100}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {row[10] || 0}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {row[11] || 0}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {row[12] || 0}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       {row[13] || 0}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 font-semibold text-green-600 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 font-semibold text-green-600 whitespace-nowrap border border-gray-300">
                       ₹ {(row[14] || 0) / 100}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-300">
                       <span
                         className={`px-2 py-0.5 rounded-full text-xs xl:text-[10px] font-semibold
                     ${row[5] === "SUCCESS"
@@ -407,16 +375,16 @@ export default function ReportsPage() {
                         {row[5]}
                       </span>
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-200">
                       {row[6]}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-200">
                       {row[7]}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-200">
                       {row[8]}
                     </td>
-                    <td className="px-3 xl:px-2 py-1.5 xl:py-0.5 whitespace-nowrap border border-gray-200">
+                    <td className="px-3 xl:px-2 py-1.5 xl:py-2 whitespace-nowrap border border-gray-200">
                       {row[9] || "-"}
                     </td>
                   </tr>
@@ -444,11 +412,9 @@ export default function ReportsPage() {
             </tbody>
           </table>
         </div>
-      </div>
 
-      {/* ================= Pagination ================= */}
-      <div className="bg-white border border-gray-100 rounded-2xl shadow-sm px-4 sm:px-6 xl:px-4 py-4 xl:py-2.5">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 xl:gap-2">
+        {/* ================= Pagination ================= */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 xl:gap-2 p-3">
           {/* Left Side */}
           <div className="text-sm xl:text-xs text-gray-500 text-center md:text-left">
             {totalRecords > 0 ? (
@@ -501,8 +467,8 @@ export default function ReportsPage() {
           xl:h-[34px]
           xl:text-sm
           rounded-lg
-          bg-yellow-500
-          text-white
+          bg-[#fec931]
+          text-black
           flex
           items-center
           justify-center

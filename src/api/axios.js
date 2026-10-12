@@ -45,7 +45,8 @@ axiosInstance.interceptors.response.use(
       localStorage.removeItem("user");
       toast.error("Session expired. Please Login Again.");
       setTimeout(() => {
-          window.location.hash("/");
+          // window.location.hash("/");
+           window.location.hash="#/";
         }, 500);
       return Promise.reject(error);
     }

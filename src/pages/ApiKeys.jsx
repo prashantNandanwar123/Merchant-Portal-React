@@ -51,7 +51,7 @@ export default function ApiKeys() {
     return (
         <div className="p-4 sm:p-6 lg:p-8 xl:p-5 bg-[#f5f6fa] min-h-[calc(100vh-64px)] overflow-y-auto">
             <div className="max-w-5xl xl:max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl p-4 sm:p-6 xl:p-5">
-                <h2 className="text-xl sm:text-2xl xl:text-xl uppercase text-gray-900 mb-4 sm:mb-6 xl:mb-4 font-bold">
+                <h2 className="text-xl sm:text-2xl xl:text-xl uppercase text-gray-900 mb-4 sm:mb-6 xl:mb-4 font-semibold cursor-default">
                     API Keys
                 </h2>
 
@@ -152,7 +152,7 @@ export default function ApiKeys() {
                         </div>
 
                         {/* Security Notes */}
-                        <div className="border border-gray-200 rounded-md bg-[#f8f9fb] p-4 xl:p-3">
+                        <div className="border border-gray-200 rounded-md bg-[#f8f9fb] p-4 xl:p-3 cursor-default">
                             <h3 className="text-lg xl:text-base font-medium text-gray-800 mb-3 xl:mb-2">
                                 Security Notes
                             </h3>

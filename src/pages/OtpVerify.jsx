@@ -43,16 +43,13 @@ export default function VerifyOtp() {
                 }
             );
 
-            if (response.respCode === 0) {
-                console.log("STEP 1");
-                toast.success(response.respMsg);
-                console.log("STEP 2");
+            if (response.respCode === 0) {                
+                toast.success(response.respMsg);               
                 setOtpVerified(true);
             } else {
                 toast.error(response.respMsg);
             }
-        } catch (error) {
-            console.log("STEP 3");
+        } catch (error) {           
             toast.error(error);
         } finally {
             setLoading(false);
@@ -61,8 +58,7 @@ export default function VerifyOtp() {
 
     // Password Validaton
     const passwordValidation = {
-
-        
+       
         length: password.length >= 8,
         uppercase: /[A-Z]/.test(password),
         lowercase: /[a-z]/.test(password),

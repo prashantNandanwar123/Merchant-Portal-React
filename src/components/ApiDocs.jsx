@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
+import { Download, FileText } from "lucide-react";
 
 export default function APIDocs() {
     return (
-        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-6 py-4 sm:py-6 xl:py-3 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar">
-            <div>
-                {/* Badge */}
-                <span className="inline-block bg-red-100 text-red-600 text-xs xl:text-[11px] font-semibold px-3 xl:px-2.5 py-1 xl:py-0.5 mt-5 xl:mt-2 rounded-full mb-4 xl:mb-2">
+        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-6 py-4 sm:py-6 xl:py-3 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar cursor-default">
+            <div>                
+                <span className="inline-block bg-[#fec931] text-black text-xs xl:text-[11px] font-semibold px-3 xl:px-2.5 py-1 xl:py-1 mt-5 xl:mt-2 rounded-full mb-4 xl:mb-2">
                     Payment Gateway API
-                </span>
-
-                {/* Heading */}
-                <h1 className="text-4xl xl:text-2xl font-bold text-blue-900 mb-4 xl:mb-2">
+                </span>                
+                <h1 className="text-4xl xl:text-2xl font-semibold text-slate-800 mb-4 xl:mb-2">
                     HelloPe Payment Gateway API
                 </h1>
-
                 {/* Description */}
                 <p className="text-gray-700 leading-7 xl:leading-5 mb-10 xl:mb-5">
                     Welcome to the HelloPe Payment Gateway API documentation.
@@ -25,16 +22,14 @@ export default function APIDocs() {
 
                 {/* API Overview */}
                 <div className="bg-white rounded-xl shadow border border-gray-200 p-8 xl:p-5 mb-10 xl:mb-5">
-                    <h2 className="text-2xl xl:text-lg font-semibold text-blue-900 mb-4 xl:mb-2">
+                    <h2 className="text-2xl xl:text-lg font-semibold text-slate-800 mb-4 xl:mb-2">
                         API Overview
                     </h2>
-
                     <p className="text-gray-700 leading-7 xl:leading-5">
                         HelloPe Payment Gateway provides a robust set of REST APIs
                         that enable businesses to securely accept, process, and
                         manage online payments.
                     </p>
-
                     <p className="text-gray-700 leading-7 xl:leading-5 mt-4 xl:mt-2">
                         Whether you're processing one-time payments, recurring
                         billing, subscription payments, or handling complex payment
@@ -44,25 +39,50 @@ export default function APIDocs() {
                 </div>
 
                 {/* Environment */}
-                <h2 className="text-2xl xl:text-lg font-semibold text-blue-900 mb-6 xl:mb-3">
+                <h2 className="text-2xl xl:text-lg font-semibold text-slate-800 mb-6 xl:mb-3">
                     Production and Sandbox Environments
                 </h2>
 
-                <div className="grid md:grid-cols-2 gap-6 xl:gap-3 mb-10 xl:mb-5">
-                    {/* Production */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-3 mb-10 xl:mb-5">
+                    {/* Production 1 */}
                     <div className="bg-white rounded-xl shadow border border-gray-200 p-6 xl:p-4">
-                        <h3 className="text-sm xl:text-xs font-bold text-red-600 tracking-widest uppercase mb-4 xl:mb-2">
+                        <h3 className="text-sm xl:text-xs font-bold text-orange-500 tracking-widest uppercase mb-4 xl:mb-2">
                             Production
                         </h3>
-
                         <p className="text-gray-700 mb-6 xl:mb-3 leading-6 xl:leading-5">
-                            Use this endpoint when you're ready to process live
-                            transactions. All requests interact with your live account
-                            and real funds will be involved.
+                            Use this endpoint when you're ready to process live transactions.
+                            All requests interact with your live account and real funds will be
+                            involved.
                         </p>
-
                         <div className="bg-gray-100 rounded-md px-4 xl:px-3 py-3 xl:py-2 font-mono text-sm xl:text-xs text-gray-800">
                             Base URL: https://pay.hellope.co.in/
+                        </div>
+                    </div>
+                    {/* Production 2 */}
+                    <div className="bg-white rounded-xl shadow border border-gray-200 p-6 xl:p-4">
+                        <h3 className="text-sm xl:text-xs font-bold text-orange-500 tracking-widest uppercase mb-4 xl:mb-2">
+                            Integration Doc
+                        </h3>
+                        <p className="text-gray-700 mb-6 xl:mb-3 leading-6 xl:leading-5">
+                            The integration guide to connect your application with our payment APIs. It provides the required endpoints, request parameters, authentication details, and response formats to help you integrate and test payment functionality smoothly.
+                        </p>
+
+                        {/* Link + Download Icon same line */}
+                        <div className="flex items-center justify-between bg-gray-100 rounded-md px-4 xl:px-3 py-3 xl:py-2">
+                            <div className="flex items-center gap-2">
+                                <FileText className="w-4 h-4 xl:w-3.5 xl:h-3.5 text-red-500" />
+                                <span className="font-mono text-sm xl:text-xs text-gray-800">
+                                    integration-doc.pdf
+                                </span>
+                            </div>
+                            <a
+                                href="/files/integration-doc.pdf"
+                                download
+                                title="Download Integration Doc"
+                                className="ml-3 flex-shrink-0 text-gray-500 hover:text-red-600 transition"
+                            >
+                                <Download className="w-4 h-4 xl:w-3.5 xl:h-3.5" />
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +104,7 @@ export default function APIDocs() {
                                 href="mailto:support@hellope.co.in"
                                 className="text-blue-600 hover:underline"
                             >
-                                support@hellope.co.in
+                                support@helloPe.co.in
                             </a>
                         </div>
 

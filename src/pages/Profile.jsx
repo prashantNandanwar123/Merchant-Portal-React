@@ -37,18 +37,17 @@ export default function Profile() {
 
     return (
         <>
-            <div className="px-4 sm:px-6 lg:px-10 py-4 sm:py-6 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar">
+            <div className="px-4 sm:px-6 lg:px-5 py-4 sm:py-6 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar">
                 <div className="w-full">
                     {/* Top Merchant Card */}
                     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-4 sm:p-6 mb-6">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            {/* Left */}
                             <div className="flex items-center gap-3 sm:gap-4">
-                                <div className="p-3 rounded-2xl bg-[#FEF6E7] flex items-center justify-center shrink-0">
-                                    <MdStorefront size={28} color="#FDC501" />
+                                <div className="p-3 rounded-2xl bg-[#fec931] flex items-center justify-center shrink-0">
+                                    <MdStorefront size={28} />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl sm:text-2xl font-bold text-gray-800 break-words">
+                                    <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 break-words">
                                         {profileData.legalName || "--"}
                                     </h2>
                                     <p className="text-gray-500 mt-1 text-xs sm:text-sm">
@@ -113,14 +112,6 @@ export default function Profile() {
                         <ProfileField
                             label="Website"
                             value={profileData.websiteUrl}
-                        />
-                        <ProfileField
-                            label="Store Type"
-                            value={profileData.storeType}
-                        />
-                        <ProfileField
-                            label="Turnover Category"
-                            value={profileData.turnoverCategory}
                         />
                     </Section>
 
@@ -209,9 +200,9 @@ function Section({ title, children }) {
     return (
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm mb-6 overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200">
+            <div className="flex items-center justify-between p-5 border-b border-gray-200">
                 <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl bg-[#FEF6E7] text-[#FDC501] flex items-center justify-center">
+                    <div className="w-11 h-11 rounded-xl bg-[#fec931] text-black flex items-center justify-center">
                         {icons[title]}
                     </div>
                     <div>
@@ -222,15 +213,11 @@ function Section({ title, children }) {
                             Manage your {title.toLowerCase()}
                         </p>
                     </div>
-                </div>
-                {/* <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
-                    <FiEdit2 size={15} />
-                    Edit
-                </button> */}
+                </div>               
             </div>
 
             {/* Body */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 pb-5 px-5">
                 {children}
             </div>
         </div>
@@ -254,11 +241,12 @@ function ProfileField({ label, value }) {
             }, 2000);
         } catch (error) {
             console.log("Copy error:", error);
+
         }
     };
 
     return (
-        <div className="border-b border-gray-200 p-4 sm:p-6 xl:p-2.5">
+        <div className="p-4 sm:p-6 xl:p-2.5">
             <p className="text-sm xl:text-[11px] font-medium text-gray-500 mb-2 xl:mb-0.5">
                 {label}
             </p>
@@ -268,14 +256,13 @@ function ProfileField({ label, value }) {
                     {/* Before URL icon */}
                     <FiGlobe
                         size={17}
-                        className="text-blue-500 flex-shrink-0 xl:w-3.5 xl:h-3.5"
+                        className="text-slate-900 flex-shrink-0 xl:w-3.5 xl:h-3.5"
                     />
-
                     <a
                         href={value}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 text-[15px] xl:text-[11px] font-semibold text-blue-600 hover:underline break-all"
+                        className="flex-1 text-[15px] xl:text-[11px] font-semibold text-slate-800 hover:underline break-all"
                     >
                         {value}
                     </a>
@@ -291,7 +278,7 @@ function ProfileField({ label, value }) {
                             size={16}
                             onClick={copyUrl}
                             title="Copy URL"
-                            className="cursor-pointer text-blue-500 hover:text-[#FDC501] flex-shrink-0 xl:w-3.5 xl:h-3.5"
+                            className="cursor-pointer text-slate-900 hover:text-[#fec931] flex-shrink-0 xl:w-3.5 xl:h-3.5"
                         />
                     )}
                 </div>

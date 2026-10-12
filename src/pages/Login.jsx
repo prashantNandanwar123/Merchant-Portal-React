@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axios";
 import { FiUser } from "react-icons/fi";
@@ -33,39 +33,86 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const isSubmitting = useRef(false);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (loading) return;
+
+        // 🔒 BLOCK MULTIPLE SUBMISSIONS IMMEDIATELY
+        if (isSubmitting.current) {
+            console.log("LOGIN ALREADY IN PROGRESS - BLOCKED");
+            return;
+        }
+
+        // Lock BEFORE doing anything else
+        isSubmitting.current = true;
         setLoading(true);
+
+        console.log("LOGIN API CALL STARTED");
+
         try {
-            const response = await axiosInstance.post("/auth/submitLogin", {
-                userId: userId,
-                password: password,
-            });
+            const response = await axiosInstance.post(
+                "/auth/submitLogin",
+                {
+                    userId: userId,
+                    password: password,
+                }
+            );
+
+            console.log("LOGIN API RESPONSE:", response);
 
             if (response.respCode === 0) {
                 localStorage.setItem("isLogin", "true");
-                localStorage.setItem("user", JSON.stringify(response.respData));
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(response.respData)
+                );
+
                 toast.success(response.respMsg);
+
+                // ❗ DO NOT unlock after successful login
+                // Keep button disabled
+
                 setTimeout(() => {
                     navigate("/app/dashboard");
                 }, 1000);
 
-            } else if (response.respCode === 3) {
+                return;
+            }
+
+            if (response.respCode === 3) {
                 toast.success(response.respMsg);
+
+                // Allow another attempt
+                isSubmitting.current = false;
+                setLoading(false);
+
                 setTimeout(() => {
                     navigate("/forgot");
                 }, 1000);
+
+                return;
             }
-            else {
-                toast.error(response.respMsg);
-            }
+
+            // Other login failure
+            toast.error(response.respMsg);
+
+            // Allow retry
+            isSubmitting.current = false;
+            setLoading(false);
+
         } catch (error) {
-            toast.error(error);
-        }
-        finally {
+            console.error("LOGIN ERROR:", error);
+
+            toast.error(
+                error?.response?.data?.respMsg ||
+                error?.message ||
+                "Something went wrong"
+            );
+
+            // API/network error → allow retry
+            isSubmitting.current = false;
             setLoading(false);
         }
     };
@@ -79,7 +126,7 @@ export default function Login() {
                     <div className="absolute inset-0 bg-cover bg-center opacity-20" />
                     <div className="relative z-10 flex flex-col justify-between h-full w-full">
                         {/* Logo */}
-                        <div className="px-6 md:px-8 lg:px-10 xl:px-8 xl:pt-1">
+                        <div className="px-6 md:px-8 lg:px-10 xl:px-8 xl:pt-1 cursor-default">
                             <img
                                 src={logo}
                                 alt="img"
@@ -176,10 +223,10 @@ export default function Login() {
                                 />
                             </div>
                             {/* Heading */}
-                            <h2 className="text-2xl font-bold text-[#071C39] text-center md:text-left">
+                            <h2 className="text-2xl font-bold text-[#071C39] text-center md:text-left cursor-default">
                                 Welcome Back!
                             </h2>
-                            <p className="mb-2 xl:mb-3 md:pb-2 text-sm text-gray-500 text-center md:text-left">
+                            <p className="mb-2 xl:mb-3 md:pb-2 text-sm text-gray-500 text-center md:text-left cursor-default">
                                 Login to your Merchant Account
                             </p>
                             {/* FORM START */}
@@ -253,25 +300,13 @@ export default function Login() {
                                     </div>
                                 </div>
 
-                                {/* Remember */}
-                                <div className="flex items-center justify-between pb-2">
-                                    <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            className="accent-[#FDB913] w-4 h-4"
-                                        />
-                                        Remember me
-                                    </label>
-
-                                </div>
                                 {/* LOGIN BUTTON */}
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className={`w-full h-10 rounded-xl text-[#071C39] font-semibold text-lg transition flex items-center justify-center gap-3 shadow-md
-                                              ${loading
+                                    className={`w-full h-10 rounded-xl text-[#071C39] font-semibold text-lg transition flex items-center justify-center gap-3 shadow-md ${loading
                                             ? "bg-gray-300 cursor-not-allowed"
-                                            : "bg-[#FDB913] hover:bg-[#f3aa00] cursor-pointer"
+                                            : "bg-[#fec931] cursor-pointer"
                                         }`}
                                 >
                                     <TbLogin2 />
@@ -289,14 +324,15 @@ export default function Login() {
 
                                     <button
                                         type="button"
-                                        className="text-[#3498db] text-sm  cursor-pointer"
+                                        onClick={() => navigate("/reLogin")}
+                                        className="text-[#3498db] text-sm hover:underline cursor-pointer"
                                     >
-                                        Became A Reseller
+                                        Became a Reseller
                                     </button>
                                 </div>
 
                                 {/* Divider */}
-                                <div className="flex items-center gap-4 pt-2">
+                                <div className="flex items-center gap-4 pt-2 cursor-default">
                                     <div className="flex-1 h-px bg-gray-300"></div>
                                     <span className="text-sm text-gray-500">
                                         New to HelloPe?
@@ -314,14 +350,14 @@ export default function Login() {
                                             />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-[#071C39]">
+                                            <h4 className="font-bold text-[#071C39] cursor-default">
                                                 Need Help?
                                             </h4>
-                                            <p className="text-xs text-gray-700 md:mt-1">
+                                            <p className="text-xs text-gray-700 md:mt-1 cursor-default">
                                                 Contact Us at
-                                                <span className="text-[#3498db] font-medium mt-2">
+                                                <span className="text-[#3498db] font-medium mt-2 cursor-pointer">
                                                     {" "}
-                                                    support@hellope.co.in
+                                                    support@helloPe.co.in
                                                 </span>
                                             </p>
                                         </div>
@@ -329,7 +365,7 @@ export default function Login() {
                                 </div>
 
                                 {/* Footer */}
-                                <div className="border-t border-gray-200">
+                                <div className="border-t border-gray-200 cursor-default">
                                     <p className="flex items-center justify-center gap-2 md:pt-2 text-sm text-gray-400 font-normal">
                                         <GrShieldSecurity className="text-xs" />
                                         <span>

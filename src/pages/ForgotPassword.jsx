@@ -202,7 +202,7 @@ export default function ForgotPassword() {
                 <div className="absolute inset-0 bg-cover bg-center opacity-20" />
                 <div className="relative z-10 flex flex-col justify-between h-full w-full">
                     {/* Logo */}
-                    <div className="px-6 md:px-8 lg:px-10">
+                    <div className="px-6 md:px-8 lg:px-10 cursor-default">
                         <img
                             src={logo}
                             alt="img"
@@ -300,7 +300,7 @@ export default function ForgotPassword() {
                     </div>
 
                     {/* Heading */}
-                    <div className="text-center mb-4">
+                    <div className="text-center mb-4 cursor-default">
                         <h2 className="text-2xl md:text-xl font-medium text-black">
                             Reset Password
                         </h2>
@@ -520,7 +520,7 @@ export default function ForgotPassword() {
                             Back to Login
                         </button>
 
-                        <div className="mt-1 p-1.5 rounded-lg bg-yellow-50">
+                        <div className="mt-1 p-1.5 rounded-lg bg-yellow-50 cursor-default">
                             <p className="text-xs font-semibold text-orange-700 mb-0.5">
                                 Note :
                             </p>
