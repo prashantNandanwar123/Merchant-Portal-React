@@ -138,12 +138,15 @@ export default function CreatePaymentLinkModal({
                             <input
                                 type="text"
                                 value={paymentData?.agentName || ""}
-                                onChange={(e) =>
-                                    setPaymentData((prev) => ({
-                                        ...prev,
-                                        agentName: e.target.value,
-                                    }))
-                                }
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^[A-Za-z\s]*$/.test(value)) {
+                                        setPaymentData((prev) => ({
+                                            ...prev,
+                                            agentName: value,
+                                        }));
+                                    }
+                                }}
                                 className="w-full border border-gray-300 rounded-lg px-3 py-2.5 sm:py-3 mt-1.5 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:border-gray-400 focus:ring-2 focus:ring-gray-100 transition-all duration-200"
                                 placeholder="Enter agent name"
                             />

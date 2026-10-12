@@ -277,6 +277,7 @@ export default function PaymentLinks() {
                             />
                         </div>
                     </div>
+                    
                     {/* Table */}
                     <div className="w-full max-h-[420px] overflow-auto">
                         <table className="w-full min-w-[1200px] text-sm xl:text-[11px] border-collapse">
