@@ -84,6 +84,10 @@ const CryptoDashboard = () => {
         }
     };
 
+   useEffect(() => {
+    fetchDashboard();
+   },[activeTab]);
+
     // AMOUNT FORMAT
     const formatAmount = (amount) => {
         if (

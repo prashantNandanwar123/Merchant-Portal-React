@@ -443,14 +443,7 @@ export default function CryptoReports() {
                     <button
                         type="button"
                         onClick={() => setActiveTab("ONRAMP")}
-                        className={`
-                        relative
-                        px-2
-                        pb-3
-                        text-sm
-                        font-semibold
-                        transition-all
-                        duration-200
+                        className={`relative px-2 pb-3 text-sm font-semibold transition-all duration-200 cursor-pointer
                         ${activeTab === "ONRAMP"
                                 ? "text-[#fec931]"
                                 : "text-black"
@@ -466,14 +459,7 @@ export default function CryptoReports() {
                     <button
                         type="button"
                         onClick={() => setActiveTab("OFFRAMP")}
-                        className={`
-                        relative
-                        px-2
-                        pb-3
-                        text-sm
-                        font-semibold
-                        transition-all
-                        duration-200
+                        className={`relative px-2 pb-3 text-sm font-semibold transition-all duration-200 cursor-pointer
                         ${activeTab === "OFFRAMP"
                                 ? "text-[#fec931]"
                                 : "text-black"
