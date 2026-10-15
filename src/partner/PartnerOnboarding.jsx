@@ -2,19 +2,11 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axios";
-import { FiUser } from "react-icons/fi";
-import { RiLockPasswordLine } from "react-icons/ri";
-import { GrShieldSecurity } from "react-icons/gr";
-import { TbLogin2 } from "react-icons/tb";
-import { UserRound } from "lucide-react";
-import { RiUserShared2Line } from "react-icons/ri";
-import { MdOutlineHeadsetMic } from "react-icons/md";
 import statecity from "../components/utils/statecity.json";
 import Select from "react-select";
-
-
 import logo from "../assets/img-1.jpeg";
 import img2 from "../assets/img-2.jpeg";
+
 import bgImg from "../assets/img.png";
 import mobileBg from "../assets/img3.png";
 import { Clock3 } from "lucide-react";
@@ -118,9 +110,7 @@ export default function PartnerOnboarding() {
                         toast.error(msg);
                     });
                 }
-
             }
-
         } catch (error) {
             toast.error(error);
         } finally {
