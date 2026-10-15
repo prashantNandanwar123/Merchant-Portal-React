@@ -231,7 +231,7 @@ export default function ForgotPassword() {
                                 value={resellerId}
                                 maxLength={20}
                                 onChange={(e) => setresellerId(e.target.value)}
-                                className="w-full h-10 md:h-10 px-4 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                className="w-full h-10 md:h-10 px-4 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-[#fec931]"
                             />
 
                             {otpSent && (
@@ -247,7 +247,7 @@ export default function ForgotPassword() {
                                 type="button"
                                 onClick={sendOtp}
                                 disabled={loading}
-                                className="w-full h-14 md:h-10 bg-[#FDB913] cursor-pointer hover:bg-[#D99B00] text-white rounded-xl text-lg font-medium transition"
+                                className="w-full h-14 md:h-10 bg-[#fec931] cursor-pointer text-black rounded-xl text-lg font-normal transition"
                             >
                                 {loading ? "Sending..." : "Send OTP"}
                             </button>
@@ -266,7 +266,7 @@ export default function ForgotPassword() {
                                     maxLength={6}
                                     disabled={!otpSent}
                                     onChange={handleOtpChange}
-                                    className={`w-full h-14 md:h-10 px-4 border rounded-xl bg-white focus:outline-none focus:border-orange-500 ${otpError
+                                    className={`w-full h-14 md:h-10 px-4 border rounded-xl bg-white focus:outline-none focus:border-[#fec931] ${otpError
                                         ? "border-red-500"
                                         : "border-gray-300"
                                         }`}
@@ -313,13 +313,13 @@ export default function ForgotPassword() {
                                 type="button"
                                 onClick={verifyOtp}
                                 disabled={loading}
-                                className="w-full h-10 bg-[#F3AA00] cursor-pointer text-white rounded-xl text-lg font-medium transition"
-                            >
+                                className="w-full h-10 bg-[#fec931] cursor-pointer text-black rounded-xl text-lg font-normal transition">                            
                                 {loading ? "Verifying..." : "Verify OTP"}
                             </button>
                         )}
 
                         {/* PASSWORDS */}
+
                         {otpVerified && (
                             <>
                                 {/* NEW PASSWORD */}
@@ -327,7 +327,6 @@ export default function ForgotPassword() {
                                     <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm">
                                         New Password
                                     </label>
-
                                     <input
                                         type={
                                             showPassword ? "text" : "password"
@@ -336,7 +335,7 @@ export default function ForgotPassword() {
                                         onChange={(e) =>
                                             setPassword(e.target.value)
                                         }
-                                        className="w-full h-14 md:h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                        className="w-full h-14 md:h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-[#fec931]"
                                         style={{
                                             backgroundColor: "#fff",
                                             WebkitBoxShadow:
@@ -349,8 +348,8 @@ export default function ForgotPassword() {
                                         onClick={() =>
                                             setShowPassword(!showPassword)
                                         }
-                                        className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-500"
-                                    >
+                                        className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-500">
+                                    
                                         {showPassword ? (
                                             <FaEyeSlash />
                                         ) : (
@@ -381,7 +380,7 @@ export default function ForgotPassword() {
                                         onChange={(e) =>
                                             setConfirmPassword(e.target.value)
                                         }
-                                        className="w-full h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                        className="w-full h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-[#fec931]"
                                     />
 
                                     <button
@@ -413,7 +412,7 @@ export default function ForgotPassword() {
                                     type="button"
                                     onClick={handleResetPassword}
                                     disabled={loading}
-                                    className="w-full cursor-pointer h-14 md:h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-lg font-medium transition"
+                                    className="w-full cursor-pointer h-14 md:h-10 bg-[#fec931] text-black rounded-xl text-lg font-normal transition"
                                 >
                                     {loading
                                         ? "Processing..."
@@ -431,11 +430,10 @@ export default function ForgotPassword() {
                             Back to Login
                         </button>
 
-                        <div className="mt-1 p-1.5 rounded-lg bg-yellow-50 cursor-default">
+                        <div className="mt-1 p-4 rounded-lg bg-yellow-50 cursor-default">
                             <p className="text-xs font-semibold text-orange-700 mb-0.5">
                                 Note :
                             </p>
-
                             <ul className="text-xs text-gray-600 space-y-0.5 leading-4">
                                 <li>• Password must contain at least 8 characters</li>
                                 <li>• Include at least one uppercase letter</li>

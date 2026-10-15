@@ -84,9 +84,9 @@ const CryptoDashboard = () => {
         }
     };
 
-   useEffect(() => {
-    fetchDashboard();
-   },[activeTab]);
+    useEffect(() => {
+        fetchDashboard();
+    }, [activeTab]);
 
     // AMOUNT FORMAT
     const formatAmount = (amount) => {
@@ -114,52 +114,54 @@ const CryptoDashboard = () => {
     const getCards = () => {
         if (activeTab === "ONRAMP") {
             return [
+
                 {
-                    title: "Total Transactions",
-                    count: dashboardData.total_count,
-                    amount: dashboardData.total_amount,
-                    icon: <FaChartLine />,
-                    iconClass: "total",
-                },
-                {
-                    title: "Successful Transactions",
+                    title: "Success Orders",
                     count: dashboardData.success_count,
                     amount: dashboardData.success_amount,
                     icon: <FaCheck />,
                     iconClass: "success",
                 },
                 {
-                    title: "Pending Transactions",
+                    title: "Pending Orders",
                     count: dashboardData.pending_count,
                     amount: dashboardData.pending_amount,
                     icon: <FaClock />,
                     iconClass: "pending",
+                },
+                {
+                    title: "Total Orders",
+                    count: dashboardData.total_count,
+                    amount: dashboardData.total_amount,
+                    icon: <FaChartLine />,
+                    iconClass: "total",
                 },
             ];
         }
 
         // OFFRAMP
         return [
+
             {
-                title: "Total Transactions",
-                count: dashboardData.total_count,
-                amount: dashboardData.total_amount,
-                icon: <FaArrowDown />,
-                iconClass: "total",
-            },
-            {
-                title: "Successful Transactions",
+                title: "Success Payout",
                 count: dashboardData.success_count,
                 amount: dashboardData.success_amount,
                 icon: <FaCheck />,
                 iconClass: "success",
             },
             {
-                title: "Failed Transactions",
-                count: dashboardData.failed_count,
-                amount: dashboardData.failed_amount,
+                title: "Pending Payout",
+                count: dashboardData.pending_count,
+                amount: dashboardData.pending_amount,
                 icon: <FaClock />,
                 iconClass: "failed",
+            },
+            {
+                title: "Total Payout",
+                count: dashboardData.total_count,
+                amount: dashboardData.total_amount,
+                icon: <FaArrowDown />,
+                iconClass: "total",
             },
         ];
     };
@@ -172,7 +174,7 @@ const CryptoDashboard = () => {
                         Crypto Order Dashboard
                     </h1>
                     <p className="mt-1 text-sm text-slate-800">
-                        Monitor your business performance with key metrics, transaction insights, payment activity, and real-time updates.
+                        Here's your real-time Crypto overview of transactions and performance.
                     </p>
                 </div>
                 {/* RIGHT - Date Filters + Search */}

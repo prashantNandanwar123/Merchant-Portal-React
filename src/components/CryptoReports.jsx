@@ -342,20 +342,24 @@ export default function CryptoReports() {
             <tr className="bg-[#fec931] text-black uppercase">
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-2 border border-gray-200 whitespace-nowrap">S.No</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Merchant Order ID</th>
-                <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Order ID</th>
+                <th className="w-[1%] text-center font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Order ID</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Sell Token Symbol</th>
-                <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Sell Token Address</th>
+                <th className="w-[1%] text-center font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Sell Token Address</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Sell Token Amount</th>
-                <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Sender Wallet Address</th>
+                <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Transaction Fee</th>
+                <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">TDS Fee</th>
+                <th className="w-[1%] text-center font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Sender Wallet Address</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Chain ID</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Fiat Amount</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Currency</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Payment Mode</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Account Number</th>
-                <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Ifsc</th>
+                <th className="w-[1%] text-center font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Ifsc</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Created At</th>
                 <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Response At</th>
-                <th className="w-[1%] text-left font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Status</th>
+                <th className="w-[1%] text-center font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">Status</th>
+                <th className="w-[1%] text-center font-medium text-gray-900 uppercase text-xs tracking-wide px-4 xl:px-2 py-3 xl:py-1 border border-gray-200 whitespace-nowrap">UTR</th>
+
             </tr>
         );
     };
@@ -398,6 +402,8 @@ export default function CryptoReports() {
                         <td className="px-3 py-2.5 border border-gray-200">{getValue("sellTokenSymbol")}</td>
                         <td className="px-3 py-2.5 border border-gray-200">{getValue("sellTokenAddress")}</td>
                         <td className="px-3 py-2.5 border border-gray-200">{getValue("sellTokenAmount")}</td>
+                        <td className="px-3 py-2.5 border border-gray-200">{getValue("transactionFee")} </td>
+                        <td className="px-3 py-2.5 border border-gray-200">{getValue("tdsFee")} </td>
                         <td className="px-3 py-2.5 border border-gray-200">{getValue("senderWalletAddress")}</td>
                         <td className="px-3 py-2.5 border border-gray-200">{getValue("chainId")}</td>
                         <td className="px-3 py-2.5 border border-gray-200">{getValue("fiatAmount")}</td>
@@ -412,6 +418,8 @@ export default function CryptoReports() {
                                 status={item?.status}
                             />
                         </td>
+                        <td className="px-3 py-2.5 whitespace-nowrap border border-gray-200">{getValue("utr")}</td>
+
                     </>
                 )}
             </tr>
@@ -729,14 +737,14 @@ function StatusBadge({ status }) {
 
     if (
         normalizedStatus === "SUCCESS" ||
-        normalizedStatus === "COMPLETED" ||
-        normalizedStatus === "SUCCESSFUL"
+        normalizedStatus === "ORDER_COMPLETED" ||
+        normalizedStatus === "PAYOUT_SUCCESS"
     ) {
         className =
             "bg-green-100 text-green-700";
     }
     if (
-        normalizedStatus === "FAILED" ||
+        normalizedStatus === "ORDER_FAILED" ||
         normalizedStatus === "FAILURE" ||
         normalizedStatus === "REJECTED"
     ) {

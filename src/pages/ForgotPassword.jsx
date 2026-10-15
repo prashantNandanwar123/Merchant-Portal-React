@@ -320,7 +320,7 @@ export default function ForgotPassword() {
                                 value={userId}
                                 maxLength={20}
                                 onChange={(e) => setUserId(e.target.value)}
-                                className="w-full h-10 md:h-10 px-4 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                className="w-full h-10 md:h-10 px-4 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-[#fec931]"
                             />
 
                             {otpSent && (
@@ -336,7 +336,7 @@ export default function ForgotPassword() {
                                 type="button"
                                 onClick={sendOtp}
                                 disabled={loading}
-                                className="w-full h-14 md:h-10 bg-[#FDB913] cursor-pointer hover:bg-[#D99B00] text-white rounded-xl text-lg font-medium transition"
+                                className="w-full h-14 md:h-10 bg-[#fec931] cursor-pointer text-black rounded-xl text-lg font-normal transition"
                             >
                                 {loading ? "Sending..." : "Send OTP"}
                             </button>
@@ -387,7 +387,7 @@ export default function ForgotPassword() {
                                         disabled={timer > 0}
                                         className={`text-sm md:text-xs font-medium ${timer > 0
                                             ? "text-gray-400 cursor-not-allowed"
-                                            : "text-orange-500 hover:text-orange-600"
+                                            : "text-[#fec931] hover:text-orange-600"
                                             }`}
                                     >
                                         Resend OTP
@@ -402,7 +402,7 @@ export default function ForgotPassword() {
                                 type="button"
                                 onClick={verifyOtp}
                                 disabled={loading}
-                                className="w-full h-10 bg-orange-500 cursor-pointer hover:bg-orange-600 text-white rounded-xl text-lg font-medium transition"
+                                className="w-full h-10 bg-[#fec931] cursor-pointer text-black rounded-xl text-lg font-medium transition"
                             >
                                 {loading ? "Verifying..." : "Verify OTP"}
                             </button>
@@ -416,7 +416,6 @@ export default function ForgotPassword() {
                                     <label className="absolute -top-3 left-4 bg-white px-2 text-gray-600 text-sm">
                                         New Password
                                     </label>
-
                                     <input
                                         type={
                                             showPassword ? "text" : "password"
@@ -425,7 +424,7 @@ export default function ForgotPassword() {
                                         onChange={(e) =>
                                             setPassword(e.target.value)
                                         }
-                                        className="w-full h-14 md:h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                        className="w-full h-14 md:h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-[#fec931]"
                                         style={{
                                             backgroundColor: "#fff",
                                             WebkitBoxShadow:
@@ -470,7 +469,7 @@ export default function ForgotPassword() {
                                         onChange={(e) =>
                                             setConfirmPassword(e.target.value)
                                         }
-                                        className="w-full h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-orange-500"
+                                        className="w-full h-10 px-4 pr-20 border border-gray-300 rounded-xl bg-white focus:outline-none focus:border-[#fec931]"
                                     />
 
                                     <button
@@ -502,7 +501,7 @@ export default function ForgotPassword() {
                                     type="button"
                                     onClick={handleResetPassword}
                                     disabled={loading}
-                                    className="w-full cursor-pointer h-14 md:h-10 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-lg font-medium transition"
+                                    className="w-full cursor-pointer h-14 md:h-10 bg-[#fec931] text-black rounded-xl text-lg font-normal transition"
                                 >
                                     {loading
                                         ? "Processing..."
@@ -520,11 +519,10 @@ export default function ForgotPassword() {
                             Back to Login
                         </button>
 
-                        <div className="mt-1 p-1.5 rounded-lg bg-yellow-50 cursor-default">
+                        <div className="mt-1 p-4 rounded-lg bg-yellow-50 cursor-default">
                             <p className="text-xs font-semibold text-orange-700 mb-0.5">
                                 Note :
                             </p>
-
                             <ul className="text-xs text-gray-600 space-y-0.5 leading-4">
                                 <li>• Password must contain at least 8 characters</li>
                                 <li>• Include at least one uppercase letter</li>
@@ -537,6 +535,6 @@ export default function ForgotPassword() {
                 </div>
             </div>
         </div>
-        </div>
+    </div>
     );
 }

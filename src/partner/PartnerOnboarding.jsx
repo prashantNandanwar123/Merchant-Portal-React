@@ -274,12 +274,12 @@ export default function PartnerOnboarding() {
                     </div>
                 </div>
 
-                {/* ================= RIGHT SIDE (SCROLLABLE) ================= */}
+                {/* ---------- RIGHT SIDE (SCROLLABLE) ------------ */}
                 <div className="flex-1 min-w-0 h-screen relative bg-cover bg-right bg-no-repeat overflow-y-auto py-6">                    <div>
-                    <h2 className="text-3xl uppercase pb-3 text-[#F0B100] font-bold text-center">
+                    <h2 className="text-3xl uppercase pb-3 text-[#fec931] font-bold text-center">
                         Register As Partner
                     </h2>
-                    <p className="px-5 py-3 text-sm text-blue-900 max-w-xl text-center mx-auto bg-yellow-100 mb-5">
+                    <p className="px-5 py-3 text-sm text-slate-800 max-w-xl text-center mx-auto bg-yellow-100 mb-5">
                         Apply to become a Payin partner.
                         After admin approval, merchants you bring will be assigned to your account and you earn commission on their transactions.
                     </p>
@@ -596,7 +596,7 @@ export default function PartnerOnboarding() {
                                     <button
                                         type="submit"
                                         disabled={loading}
-                                        className={`bg-yellow-500 text-white px-6 py-2 rounded ${loading
+                                        className={`bg-[#fec931] text-black px-6 py-2 rounded ${loading
                                             ? "opacity-60 cursor-not-allowed"
                                             : "cursor-pointer"
                                             }`}
@@ -606,7 +606,10 @@ export default function PartnerOnboarding() {
                                 </div>
 
                                 {showApprovalPopup && (
-                                    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/30 px-4">
+                                    <div className="fixed inset-0
+                                    
+                                    
+                                    z-[9999] flex items-center justify-center bg-black/30 px-4">
                                         {/* Popup */}
                                         <div className="relative w-full max-w-[515px] rounded-2xl bg-white border border-gray-200 shadow-xl px-6 sm:px-10 py-8 sm:py-9 text-center">
                                             {/* Cross Button */}
